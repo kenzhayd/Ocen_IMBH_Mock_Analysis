@@ -48,13 +48,6 @@ omega = "UniformCircular()"          # Argument of periastron [rad]
 Omega = "UniformCircular()"          # Longitude of ascending node [rad]
 theta = "UniformCircular()"          # Mean anomaly at reference epoch [rad]
 
-
-
-# Fitting configuration
-[fitting]
-n_rounds = 18
-n_chains = 192
-
 # --- Data selection ---
 # Which observation types to include per star.  Defaults apply to all stars.
 # Set to false to exclude a data type for a specific star.
@@ -75,10 +68,6 @@ radial_velocity = false
 [data.overrides.D]
 radial_velocity = false
 
-
-z_prior         = true      # LOS position prior (cluster membership constraint)
-escape_velocity = false     # Häberle-style piecewise escape velocity constraint
-
 # Line-of-sight (z) prior — constrains each star's LOS offset from the IMBH.
 # sigma_z_au is the width of a Normal(0, σ) prior in AU.
 # 0.0221 pc = 4558 AU (one-dimensional positional standard deviation from Haberle)
@@ -98,7 +87,8 @@ job_id = ""
 n_rounds             = 16
 n_chains             = 192
 n_chains_variational = 192
-checkpoint           = false
+checkpoint           = true
+
 
 # --- Slurm / HPC ---
 [slurm]
@@ -107,7 +97,7 @@ job_name      = "mock_test_1"
 nodes         = 1
 cpus_per_task = 192
 mem_per_cpu   = "3G"
-time          = "12:00:00"
+time          = "16:00:00"
 julia_module  = "julia/1.11.3"
 julia_threads = 192
 mail_type     = "ALL"

@@ -700,11 +700,11 @@ function build_mock_observations(star::StarData, epoch_mjd::Float64;
     if include_rv && !isnan(star.rv) && !isnan(star.rv_err)
         rv_noisy = rand(Normal(star.rv, star.rv_err))
         rv = PlanetRelativeRVObs(
-        (epoch = epoch_mjd,
-        rv    = rand(Normal(star.rv, star.rv_err)),
-        σ_rv  = star.rv_err,
-        variables = @variables begin end);
-        name = "$(star.name)_rv"
+            (epoch = epoch_mjd,
+            rv    = rv_noisy,
+            σ_rv  = star.rv_err);
+            name = "$(star.name)_rv",
+            variables = @variables begin end
         )
     end
 
