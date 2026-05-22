@@ -1,0 +1,132 @@
+┌ Warning: could not download https://pkg.julialang.org/registries
+│   exception = RequestError: Failed to connect to pkg.julialang.org port 443 after 30006 ms: Timeout was reached while requesting https://pkg.julialang.org/registries
+└ @ Pkg.Registry /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Registry/Registry.jl:77
+   Resolving package versions...
+  No Changes to `~/projects/def-vhenault/kenzhayd/octoIMBH_env/Project.toml`
+  No Changes to `~/projects/def-vhenault/kenzhayd/octoIMBH_env/Manifest.toml`
+Loaded config: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_mock_analysis/configs/mock_default.toml
+Mock data fitting: generating synthetic data from config parameterset
+[ Info: Preparing model
+┌ Info: Determined number of free variables
+└   D = 49
+┌ Info: Determined number type
+└   T = Float64
+ℓπcallback(θ): 0.000047 seconds
+∇ℓπcallback(θ): 0.002324 seconds (7 allocations: 181.062 KiB)
+Run summary written to /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_mock_analysis/configs/../mock_results/run_outputs/starsACDEF_192c_16r_12863692_summary.md
+┌ Warning: This model has priors that cannot be sampled IID.
+└ @ OctofitterPigeonsExt ~/projects/def-vhenault/kenzhayd/Octofitter_imbh.jl/ext/OctofitterPigeonsExt/OctofitterPigeonsExt.jl:105
+[ Info: Sampler running with multiple threads     : true
+[ Info: Likelihood evaluated with multiple threads: false
+┌ Info: Starting values not provided for all parameters! Guessing starting point using global optimization:
+│   num_params = 49
+└   num_fixed = 0
+┌ Warning: The initial guess parameters fell outside the 0.00001 or 0.9999 quantile range of the priors, so global optimization search is disabled. Returning initial guess only, which may be far from the global mode.
+└ @ Octofitter ~/projects/def-vhenault/kenzhayd/Octofitter_imbh.jl/src/initialization.jl:553
+┌ Info: Found sample of initial positions
+│   logpost_range = (-5562.443358571039, -5553.606076561035)
+└   mean_logpost = -5557.188164642388
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  scans     restarts      Λ        Λ_var      time(s)    allc(B)  log(Z₁/Z₀)   min(α)     mean(α)    min(αₑ)   mean(αₑ) 
+────────── ────────── ────────── ────────── ────────── ────────── ────────── ────────── ────────── ────────── ──────────
+        2          0       10.2       10.2       1.25   6.33e+07  -7.87e+06          0      0.947          1          1 
+        4          0       12.9       18.1       0.67   2.78e+06  -9.03e+03          0      0.919      0.997          1 
+        8          0       15.8       24.3       1.27   5.58e+06  -5.38e+03          0      0.895          1          1 
+       16          0       16.8       23.7       2.42   1.13e+07  -5.29e+03          0      0.894          1          1 
+       32          0       22.8       24.5       4.92   1.97e+07  -5.26e+03   5.94e-11      0.876          1          1 
+       64          0       23.6       14.2       11.7   2.91e+09   -5.5e+03   2.56e-11      0.901          1          1 
+      128          0       28.3       14.9       22.7    6.1e+09  -5.39e+03     0.0259      0.887          1          1 
+      256          0       30.3       17.9       44.9   1.16e+10     -5e+03       0.35      0.874          1          1 
+      512          1       34.5       28.1       88.5   2.16e+10  -3.26e+03       0.44      0.837          1          1 
+ 1.02e+03          2       40.9       36.8        180   4.52e+10  -2.59e+03      0.528      0.797          1          1 
+ 2.05e+03         13       43.7       27.5        370   9.47e+10       -902      0.616      0.814          1          1 
+  4.1e+03          6       38.6         24        732   1.81e+11       -319      0.693      0.837          1          1 
+ 8.19e+03          4       31.7       23.1   1.57e+03   3.44e+11       -221      0.762      0.857          1          1 
+ 1.64e+04         30       31.1       22.8   2.78e+03   6.74e+11       -198      0.824      0.859          1          1 
+ 3.28e+04        109       31.4       21.6   5.48e+03   1.32e+12       -184      0.794      0.862          1          1 
+ 6.55e+04        432       31.3       19.8   1.09e+04   2.61e+12       -182      0.827      0.867          1          1 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+MCMC chain (65536×83×1 Array{Float64, 3})
+PT exec folder (intermediate checkpoints): /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_mock_analysis/launch_scripts/results/all/2026-05-21-12-51-49-bfm9mO8u
+PT location written to: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_mock_analysis/configs/../mock_results/run_outputs/starsACDEF_192c_16r_12863692_pt_location.txt
+Loaded configuration from: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_mock_analysis/mock_results/run_outputs/starsACDEF_192c_16r_12863692_summary.md
+Reference epoch: 55197.0 MJD (2010.0 yr)
+Loaded chain: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_mock_analysis/configs/../mock_results/run_outputs/starsACDEF_192c_16r_12863692_chain.fits
+MCMC chain (65536×83×1 Array{Float64, 3})
+Star names from summary: A, C, D, E, F
+[ Info: Preparing model
+┌ Info: Determined number of free variables
+└   D = 49
+┌ Info: Determined number type
+└   T = Float64
+ℓπcallback(θ): 0.000040 seconds
+∇ℓπcallback(θ): 0.001304 seconds (6 allocations: 180.969 KiB)
+
+=== Posterior summaries (median, 68% CI) ===
+Param                     Median  [     16%,      84%]
+M_IMBH [10⁴ M☉]            7.255  [   6.462,    8.260]
+plx [mas]                  0.190  [   0.187,    0.194]
+offsetx [mas]             12.399  [-104.485,   88.037]
+offsety [mas]              3.392  [ -83.115,  179.645]
+A: a [AU]               2613.505  [2074.402, 3236.861]
+A: e                       0.107  [   0.028,    0.308]
+A: i [°]                 144.810  [ 113.057,  162.946]
+A: ω [°]                   6.555  [-109.528,  115.435]
+A: Ω [°]                  49.423  [-111.108,   90.228]
+C: a [AU]               5478.962  [3421.884, 7450.210]
+C: e                       0.165  [   0.048,    0.368]
+C: i [°]                  70.513  [  59.637,   80.686]
+C: ω [°]                  24.020  [-124.708,   99.309]
+C: Ω [°]                  45.218  [-131.747,   54.039]
+D: a [AU]               4640.232  [3171.712, 5780.590]
+D: e                       0.129  [   0.034,    0.332]
+D: i [°]                  79.617  [  72.099,   85.920]
+D: ω [°]                  14.572  [-124.529,  107.832]
+D: Ω [°]                 -43.044  [ -61.183,  122.685]
+E: a [AU]               4551.691  [2565.149, 9922.834]
+E: e                       0.664  [   0.575,    0.803]
+E: i [°]                  72.748  [  62.132,   79.876]
+E: ω [°]                  97.993  [-131.112,  135.657]
+E: Ω [°]                 128.045  [ -84.185,  143.570]
+F: a [AU]              12381.282  [11233.486, 13887.165]
+F: e                       0.097  [   0.029,    0.194]
+F: i [°]                  17.627  [   8.676,   32.870]
+F: ω [°]                 -17.498  [ -80.482,   93.435]
+F: Ω [°]                 -13.671  [-124.940,    6.328]
+
+Generating corner plot...
+Corner plot saved.
+Generating orbit panels...
+Orbit panels saved.
+Generating posterior panels...
+Posterior panels saved.
+Generating plausibility diagnostics...
+Plausibility diagnostics saved.
+Generating phase / acceleration-alignment diagnostics...
+Phase / acceleration alignment diagnostics saved.
+Generating RV consistency check...
+RV consistency check saved.
+Generating acceleration posterior predictive check...
+Acceleration posterior predictive check saved.
+Generating IMBH position overlay figure...
+ERROR: LoadError: ArgumentError: Package KernelDensity not found in current path, maybe you meant `import/using .KernelDensity`.
+- Otherwise, run `import Pkg; Pkg.add("KernelDensity")` to install the KernelDensity package.
+Stacktrace:
+ [1] macro expansion
+   @ ./loading.jl:2296 [inlined]
+ [2] macro expansion
+   @ ./lock.jl:273 [inlined]
+ [3] __require(into::Module, mod::Symbol)
+   @ Base ./loading.jl:2271
+ [4] #invoke_in_world#3
+   @ ./essentials.jl:1089 [inlined]
+ [5] invoke_in_world
+   @ ./essentials.jl:1086 [inlined]
+ [6] require(into::Module, mod::Symbol)
+   @ Base ./loading.jl:2260
+ [7] include(fname::String)
+   @ Main ./sysimg.jl:38
+ [8] top-level scope
+   @ ~/projects/def-vhenault/kenzhayd/Ocen_IMBH_mock_analysis/launch_scripts/octo_orbit_direct_likelihoods.jl:393
+in expression starting at /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_mock_analysis/launch_scripts/plot_chain.jl:809
+in expression starting at /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_mock_analysis/launch_scripts/octo_orbit_direct_likelihoods.jl:393
