@@ -224,6 +224,7 @@ for name in star_names
     push!(stat_lines, format_stat("$(name): i [°]",  s.i; scale=180/π))
     push!(stat_lines, format_stat("$(name): ω [°]",  s.ω; scale=180/π))
     push!(stat_lines, format_stat("$(name): Ω [°]",  s.Ω; scale=180/π))
+    push!(stat_lines, format_stat("$(name): tp [mjd]", s.tp;))
 end
 
 println("\n=== Posterior summaries (median, 68% CI) ===")
@@ -291,6 +292,8 @@ function star_orbit_panel!(ax, s, M_samp, plx_samp, ox_samp, oy_samp,
     end
     scatter!(ax, [0.0], [0.0]; marker='+', markersize=20, color=:black)
     scatter!(ax, [ox_med_loc], [oy_med_loc]; marker=:circle, markersize=12, color=:black)
+    
+    
     arrows2d!(ax, [obs_ra], [obs_dec],
         [obs_pmra * scale_pm], [obs_pmdec * scale_pm];
         color=:red, shaftwidth=2.0, tipwidth=10, tiplength=10)

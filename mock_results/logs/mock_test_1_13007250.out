@@ -1,0 +1,47 @@
+┌ Warning: could not download https://pkg.julialang.org/registries
+│   exception = RequestError: Failed to connect to pkg.julialang.org port 443 after 30004 ms: Timeout was reached while requesting https://pkg.julialang.org/registries
+└ @ Pkg.Registry /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Registry/Registry.jl:77
+   Resolving package versions...
+  No Changes to `~/projects/def-vhenault/kenzhayd/octoIMBH_env/Project.toml`
+  No Changes to `~/projects/def-vhenault/kenzhayd/octoIMBH_env/Manifest.toml`
+Loaded config: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/mock_default_2.toml
+Mock data fitting: generating synthetic data from config parameterset
+[ Info: Preparing model
+┌ Info: Determined number of free variables
+└   D = 49
+┌ Info: Determined number type
+└   T = Float64
+ℓπcallback(θ): 0.000049 seconds
+∇ℓπcallback(θ): 0.002146 seconds (7 allocations: 181.062 KiB)
+Observations written to /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/../mock_results/run_outputs/starsACDEF_192c_18r_13007250_observations.toml
+Run summary written to /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/../mock_results/run_outputs/starsACDEF_192c_18r_13007250_summary.md
+┌ Warning: This model has priors that cannot be sampled IID.
+└ @ OctofitterPigeonsExt ~/projects/def-vhenault/kenzhayd/Octofitter_imbh.jl/ext/OctofitterPigeonsExt/OctofitterPigeonsExt.jl:105
+[ Info: Sampler running with multiple threads     : true
+[ Info: Likelihood evaluated with multiple threads: false
+┌ Info: Starting values not provided for all parameters! Guessing starting point using global optimization:
+│   num_params = 49
+└   num_fixed = 0
+┌ Info: Found sample of initial positions
+│   logpost_range = (-116.35103245512241, -108.18305959123451)
+└   mean_logpost = -112.40965525591274
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  scans     restarts      Λ        Λ_var      time(s)    allc(B)  log(Z₁/Z₀)   min(α)     mean(α)    min(αₑ)   mean(αₑ) 
+────────── ────────── ────────── ────────── ────────── ────────── ────────── ────────── ────────── ────────── ──────────
+        2          0       11.3       7.93       1.13   6.42e+07     -2e+08          0       0.95          1          1 
+        4          0       15.2       13.2      0.563   2.78e+06  -2.65e+06          0      0.926          1          1 
+        8          0       17.9       18.4       1.12   5.59e+06  -2.85e+04          0      0.905          1          1 
+       16          0       23.4       22.4       2.26   1.13e+07       -524          0       0.88          1          1 
+       32          0       23.9       26.6       4.77   1.96e+07       -162   2.69e-32      0.868          1          1 
+       64          0       27.1       11.7       11.1    2.8e+09       -253   4.26e-21      0.899          1          1 
+      128          0       27.9       12.5       21.9   5.75e+09       -236     0.0617      0.895          1          1 
+      256          0       29.4       12.9       42.6   1.15e+10       -231      0.104      0.889          1          1 
+      512          0       29.9       13.4       85.3   2.29e+10       -225      0.487      0.887          1          1 
+ 1.02e+03          1       30.1       14.6        169   4.53e+10       -216      0.789      0.883          1          1 
+ 2.05e+03         10       30.4       15.7        337   8.98e+10       -211      0.811       0.88          1          1 
+  4.1e+03         24       30.6       16.5        675   1.77e+11       -206      0.813      0.877          1          1 
+ 8.19e+03         26       30.7       18.4   1.35e+03   3.48e+11       -199      0.821      0.872          1          1 
+ 1.64e+04         55         31       19.2   2.69e+03   6.87e+11       -192      0.819      0.869          1          1 
+ 3.28e+04        180       31.1       19.1   5.32e+03   1.34e+12       -188      0.821      0.869          1          1 
+ 6.55e+04        417       31.3       19.3   1.06e+04   2.67e+12       -186      0.821      0.868          1          1 
+ 1.31e+05        962       31.3       19.8   2.12e+04   5.32e+12       -186       0.82      0.867          1          1 

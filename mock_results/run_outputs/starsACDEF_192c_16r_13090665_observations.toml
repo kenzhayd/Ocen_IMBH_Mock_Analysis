@@ -1,0 +1,85 @@
+epoch_mjd = 55197.0
+
+[stars.A]
+pmra = 1.7816559207147382
+sigma_pmra = 0.081
+has_rv = false
+sigma_accdec = 0.0118
+sigma_dec = 0.5
+has_acceleration = true
+accra = 0.014643938518147132
+ra = -142.5480541720802
+sigma_pmdec = 0.053
+sigma_accra = 0.0168
+accdec = 0.03097463259565507
+dec = -1511.2263441787177
+pmdec = 1.2438300576346581
+sigma_ra = 0.5
+
+[stars.C]
+pmra = -3.4073216709589818
+sigma_pmra = 0.081
+has_rv = false
+sigma_accdec = 0.0118
+sigma_dec = 0.5
+has_acceleration = true
+accra = -0.017202645335474782
+ra = 433.62238858785
+sigma_pmdec = 0.053
+sigma_accra = 0.0168
+accdec = -0.010352954247853166
+dec = -40.12335877689135
+pmdec = -3.1073945985125317
+sigma_ra = 0.5
+
+[stars.D]
+pmra = 2.0867322099025802
+sigma_pmra = 0.081
+has_rv = false
+sigma_accdec = 0.0118
+sigma_dec = 0.5
+has_acceleration = true
+accra = -0.004092625366612901
+ra = 641.4409581316952
+sigma_pmdec = 0.053
+sigma_accra = 0.0168
+accdec = 0.00484181877696722
+dec = -183.34942693343925
+pmdec = -1.5483807220270764
+sigma_ra = 0.5
+
+[stars.E]
+rv = -125697.48055456435
+pmra = 2.5090175884888817
+sigma_pmra = 0.081
+has_rv = true
+sigma_accdec = 0.0118
+sigma_dec = 0.5
+has_acceleration = true
+accra = 0.02667942284332046
+ra = -186.4376638658335
+sigma_pmdec = 0.053
+sigma_accra = 0.0168
+accdec = 0.004994564618125535
+dec = 435.2913773956303
+sigma_rv = 3350.0
+pmdec = -0.635891151268763
+sigma_ra = 0.5
+
+[stars.F]
+rv = 8542.559353773395
+pmra = 1.3105976564191515
+sigma_pmra = 0.081
+has_rv = true
+sigma_accdec = 0.0118
+sigma_dec = 0.5
+has_acceleration = true
+accra = -0.004347505987835319
+ra = -1919.794959266421
+sigma_pmdec = 0.053
+sigma_accra = 0.0168
+accdec = 0.00657488132920335
+dec = 980.1184200715721
+sigma_rv = 3350.0
+pmdec = 2.489943385148647
+sigma_ra = 0.5

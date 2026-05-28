@@ -121,11 +121,11 @@ for name in star_names
         # Generate mock StarData from orbital parameters in config
         mock_cfg = cfg["mock"]
         star_cfg = mock_cfg["stars"][name]
-        a, e, i, ω, Ω = star_cfg["orbital_elements"]
+        a, e, i, ω, Ω, tp = star_cfg["orbital_elements"]
         
         star = octo_utils.stardata_struct(
             name;
-            a=a, e=e, i=i, ω=ω, Ω=Ω,
+            a=a, e=e, i=i, ω=ω, Ω=Ω, tp=tp,
             M=mock_cfg["M_IMBH"],
             plx=mock_cfg["plx"],
             t_ref=epoch_mjd,

@@ -1,0 +1,41 @@
+Loaded config: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/mock_default_2.toml
+Mock data fitting: generating synthetic data from config parameterset
+[ Info: Preparing model
+┌ Info: Determined number of free variables
+└   D = 49
+┌ Info: Determined number type
+└   T = Float64
+ℓπcallback(θ): 0.000043 seconds
+∇ℓπcallback(θ): 0.002274 seconds (7 allocations: 181.062 KiB)
+Observations written to /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/../mock_results/run_outputs/starsACDEF_192c_18r_12983839_observations.toml
+Run summary written to /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/../mock_results/run_outputs/starsACDEF_192c_18r_12983839_summary.md
+┌ Warning: This model has priors that cannot be sampled IID.
+└ @ OctofitterPigeonsExt ~/projects/def-vhenault/kenzhayd/Octofitter_imbh.jl/ext/OctofitterPigeonsExt/OctofitterPigeonsExt.jl:105
+[ Info: Sampler running with multiple threads     : true
+[ Info: Likelihood evaluated with multiple threads: false
+┌ Info: Starting values not provided for all parameters! Guessing starting point using global optimization:
+│   num_params = 49
+└   num_fixed = 0
+┌ Info: Found sample of initial positions
+│   logpost_range = (-97.54680223013159, -82.03347443222296)
+└   mean_logpost = -91.24281143249132
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  scans     restarts      Λ        Λ_var      time(s)    allc(B)  log(Z₁/Z₀)   min(α)     mean(α)    min(αₑ)   mean(αₑ) 
+────────── ────────── ────────── ────────── ────────── ────────── ────────── ────────── ────────── ────────── ──────────
+        2          0       10.3       8.62       1.48   1.05e+08  -3.47e+07          0      0.951          1          1 
+        4          0       14.4       12.6      0.584   2.78e+06  -7.57e+05          0       0.93          1          1 
+        8          0       18.8       18.9       1.15   5.59e+06  -3.75e+04          0      0.902          1          1 
+       16          0       22.1       20.9       2.34   1.13e+07  -1.68e+03          0      0.888          1          1 
+       32          0       24.4       24.2       4.63   1.99e+07       -517          0      0.873          1          1 
+       64          0       26.5       14.1       10.9   2.74e+09       -195   1.21e-15      0.894          1          1 
+      128          0       27.5       16.6       21.2   5.54e+09       -198     0.0583      0.885          1          1 
+      256          0       29.2       16.6       42.5    1.1e+10       -201      0.229       0.88          1          1 
+      512          0       29.6       17.6       85.5   2.19e+10       -194      0.575      0.877          1          1 
+ 1.02e+03          0         30       17.4        168   4.37e+10       -190      0.707      0.876          1          1 
+ 2.05e+03          0       30.1       17.4        341   8.85e+10       -182      0.808      0.876          1          1 
+  4.1e+03          0       30.5       17.8        677   1.77e+11       -179      0.817      0.874          1          1 
+ 8.19e+03          0       30.6       17.7   1.36e+03   3.55e+11       -181      0.816      0.874          1          1 
+ 1.64e+04          0       30.8       18.1    2.7e+03   7.08e+11       -179      0.822      0.873          1          1 
+ 3.28e+04         36       30.9       18.2   5.47e+03   1.41e+12       -188      0.827      0.872          1          1 
+ 6.55e+04         65         31       18.9   1.09e+04   2.79e+12       -187      0.831       0.87          1          1 
+ 1.31e+05        562       31.1       19.4   2.16e+04   5.48e+12       -187      0.826      0.868          1          1 

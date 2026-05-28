@@ -1,3 +1,51 @@
+# Mock Data Fitting with Ocen_IMBH_analysis
+
+## Ocen_IMBBH_analysis is below 
+## What Changed FROM Ocen_IMBH_analysis?
+
+(octo_utils.jl):
+- Added mock orbit generation: `make_star()`, `mock_data()`, `stardata_struct()`
+- Added noise to mock data : `build_mock_observations()`
+
+(octo_orbit_direct_likelihoods.jl):
+- If `[mock]` section in config with `enabled=true`: uses mock data
+- Otherwise: uses real data 
+
+Initial config template:
+- `configs/mock_default.toml` 
+
+## Next Step: extract tp from chain from fit 10836842 to better represent real stars
+
+Also important... the acceleration type thing is disabled for simplicity right now. 
+
+Escape velocity is also buggy with these changes for now. 
+
+See version 2 for plotting revisions
+
+KernelDensity not automatically added
+
+Run summary written to 
+
+Issue? C:\Users\macke\Clusters\Ocen_IMBH_Mock_Analysis\configs\../mock_results/run_outputs\starsACDEF_192c_16r_none_summary.md
+---
+
+
+
+## Default run locally 
+```bash
+julia launch_scripts/octo_orbit_direct_likelihoods.jl configs/mock_64000.toml
+```
+## Default run on a interactive session
+julia --project=../../octoIMBH_env octo_orbit_direct_likelihoods.jl ../configs/mock_default.toml
+
+## Run on cluster
+julia submit_job.jl ../configs/mock_default.toml
+julia submit_job_2.jl ../configs/mock_default_2.toml
+
+
+
+
+
 # Ocen IMBH Analysis
 
 Scripts for fitting orbits of high-velocity stars around an intermediate-mass black hole (IMBH) candidate in ω Centauri. Orbit fitting uses [`Octofitter_imbh.jl`](../Octofitter_imbh.jl), a development fork of [Octofitter](https://github.com/sefffal/Octofitter.jl), sampling with Pigeons (parallel tempering HMC/NUTS).
@@ -280,7 +328,7 @@ Adjust at minimum: `[stars] selected`, `[slurm] account`, `[slurm] mail_user`, a
 
 ```bash
 cd launch_scripts/
-julia submit_job.jl ../configs/mock_default.toml --dry-run
+julia submit_job_2.jl ../configs/mock_default_2.toml --dry-run
 ```
 
 This writes a timestamped `.sh` file to the log directory and prints the `sbatch` command, but does **not** submit.

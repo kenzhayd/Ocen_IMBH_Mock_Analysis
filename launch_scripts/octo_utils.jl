@@ -477,7 +477,6 @@ end
 
 # ========== START MOCK MODIFICATIONS  ==========
 # The following functions have been added for generating mock data to test Octofitter fitting.
-# See MOCK_PLAN.md for details.
 
 # ========================================================
 #  Mock Orbit Generation
@@ -500,19 +499,16 @@ Parameters:
 - i: Inclination [rad]
 - ω: Argument of periastron [rad]
 - Ω: Longitude of ascending node [rad]
+- tp: Time of periastron passage (MJD)
 - M: Central mass [solar masses]
 - plx: Parallax [mas]
-- t_ref: Reference epoch (MJD) for setting periastron time
+
 
 Returns:
 - MockOrbit containing a Visual{KepOrbit} object
 """
-function make_star(name; a, e, i, ω, Ω, M, plx, t_ref)
-    θ = 2π * rand()
-    tp = θ_at_epoch_to_tperi(
-        θ, t_ref;
-        a=a, e=e, i=i, ω=ω, Ω=Ω, M=M
-    )
+function make_star(name; a, e, i, ω, Ω, tp, M, plx)
+
     orbit = Visual{KepOrbit}(;
         a=a,
         e=e,
@@ -585,7 +581,7 @@ Returns:
 - StarData struct with noiseless observables and specified uncertainties
 """
 function stardata_struct(name;
-    a, e, i, ω, Ω,
+    a, e, i, ω, Ω, tp,
     M,
     plx,
     t_ref,
@@ -598,7 +594,7 @@ function stardata_struct(name;
     sigma_acc_dec,
     sigma_rv
 )
-    orbit = make_star(name; a, e, i, ω, Ω, M=M, plx=plx, t_ref=t_ref)
+    orbit = make_star(name; a, e, i, ω, Ω, tp, M=M, plx=plx)
     obs = mock_data(orbit, epoch)
     
     v2D = hypot(obs.pmra, obs.pmdec)
