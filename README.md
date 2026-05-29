@@ -1,6 +1,6 @@
 # Mock Data Fitting with Ocen_IMBH_analysis
 
-## Ocen_IMBBH_analysis is below 
+ 
 ## What Changed FROM Ocen_IMBH_analysis?
 
 (octo_utils.jl):
@@ -14,19 +14,16 @@
 Initial config template:
 - `configs/mock_default.toml` 
 
-## Next Step: extract tp from chain from fit 10836842 to better represent real stars
+## Current issues?
 
 Also important... the acceleration type thing is disabled for simplicity right now. 
 
-Escape velocity is also buggy with these changes for now. 
+Escape velocity may buggy. 
 
-See version 2 for plotting revisions
+KernelDensity not automatically added.
 
-KernelDensity not automatically added
+Run summary written to C:\Users\macke\Clusters\Ocen_IMBH_Mock_Analysis\configs\../mock_results/run_outputs\starsACDEF_192c_16r_none_summary.md
 
-Run summary written to 
-
-Issue? C:\Users\macke\Clusters\Ocen_IMBH_Mock_Analysis\configs\../mock_results/run_outputs\starsACDEF_192c_16r_none_summary.md
 ---
 
 
@@ -36,11 +33,12 @@ Issue? C:\Users\macke\Clusters\Ocen_IMBH_Mock_Analysis\configs\../mock_results/r
 julia launch_scripts/octo_orbit_direct_likelihoods.jl configs/mock_64000.toml
 ```
 ## Default run on a interactive session
+```bash
 julia --project=../../octoIMBH_env octo_orbit_direct_likelihoods.jl ../configs/mock_default.toml
-
+```
 ## Run on cluster
 julia submit_job.jl ../configs/mock_default.toml
-julia submit_job_2.jl ../configs/mock_default_2.toml
+
 
 
 
