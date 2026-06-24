@@ -1,0 +1,128 @@
+┌ Warning: could not download https://pkg.julialang.org/registries
+│   exception = RequestError: Failed to connect to pkg.julialang.org port 443 after 30005 ms: Timeout was reached while requesting https://pkg.julialang.org/registries
+└ @ Pkg.Registry /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Registry/Registry.jl:77
+    Updating registry at `~/.julia/registries/General.toml`
+   Resolving package versions...
+  No Changes to `~/projects/def-vhenault/kenzhayd/octoIMBH_env/Project.toml`
+  No Changes to `~/projects/def-vhenault/kenzhayd/octoIMBH_env/Manifest.toml`
+Loaded config: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/mock_rand_3.toml
+Mock data fitting: generating synthetic data from config parameterset
+[ Info: Preparing model
+┌ Info: Determined number of free variables
+└   D = 49
+┌ Info: Determined number type
+└   T = Float64
+ℓπcallback(θ): 0.000048 seconds
+∇ℓπcallback(θ): 0.002295 seconds (7 allocations: 181.062 KiB)
+Run summary written to /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/../mock_results/run_outputs/starsACDEF_192c_16r_14523389_summary.md
+┌ Warning: This model has priors that cannot be sampled IID.
+└ @ OctofitterPigeonsExt ~/projects/def-vhenault/kenzhayd/Octofitter_imbh.jl/ext/OctofitterPigeonsExt/OctofitterPigeonsExt.jl:105
+[ Info: Sampler running with multiple threads     : true
+[ Info: Likelihood evaluated with multiple threads: false
+┌ Info: Starting values not provided for all parameters! Guessing starting point using global optimization:
+│   num_params = 49
+└   num_fixed = 0
+┌ Warning: The initial guess parameters fell outside the 0.00001 or 0.9999 quantile range of the priors, so global optimization search is disabled. Returning initial guess only, which may be far from the global mode.
+└ @ Octofitter ~/projects/def-vhenault/kenzhayd/Octofitter_imbh.jl/src/initialization.jl:553
+┌ Info: Found sample of initial positions
+│   logpost_range = (-6021.07878895343, -6007.0833160077555)
+└   mean_logpost = -6013.10483998221
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  scans     restarts      Λ        Λ_var      time(s)    allc(B)  log(Z₁/Z₀)   min(α)     mean(α)    min(αₑ)   mean(αₑ) 
+────────── ────────── ────────── ────────── ────────── ────────── ────────── ────────── ────────── ────────── ──────────
+        2          0        9.3       10.2       1.17   8.57e+07  -6.25e+07          0      0.949          1          1 
+        4          0       14.1       14.1      0.561   2.79e+06     -2e+06          0      0.926          1          1 
+        8          0       15.8       15.8       1.13    5.6e+06  -4.55e+04          0      0.917          1          1 
+       16          0       18.6       20.5       2.29   1.12e+07  -8.23e+03          0      0.898          1          1 
+       32          0       23.2       21.6       4.87      2e+07  -6.05e+03  8.36e-190      0.883          1          1 
+       64          0       25.2       12.1       11.8   2.78e+09  -5.44e+03    2.4e-11      0.903          1          1 
+      128          0       28.3       15.2       22.3   5.67e+09  -6.02e+03      0.064      0.887          1          1 
+      256          0       31.7       18.1       44.1   1.12e+10   -5.7e+03      0.281       0.87          1          1 
+      512          0       37.2       26.7         89   2.19e+10  -4.05e+03      0.383      0.833          1          1 
+ 1.02e+03          5       43.2       37.8        183    4.5e+10  -3.09e+03      0.242      0.789          1          1 
+ 2.05e+03          9       46.8       33.7        376    9.5e+10  -1.79e+03       0.53       0.79          1          1 
+  4.1e+03          7       44.7       26.6        763   1.89e+11       -542      0.558      0.814          1          1 
+ 8.19e+03         12       35.9       23.9   1.52e+03   3.62e+11       -279      0.701      0.844          1          1 
+ 1.64e+04         17       32.2       23.1   2.95e+03   7.06e+11       -220      0.785      0.856          1          1 
+ 3.28e+04         20       31.1         23   5.86e+03    1.4e+12       -204       0.82      0.859          1          1 
+ 6.55e+04         40       31.1       22.9   1.16e+04   2.76e+12       -194      0.826      0.859          1          1 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+MCMC chain (65536×83×1 Array{Float64, 3})
+PT exec folder (intermediate checkpoints): /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/launch_scripts/results/all/2026-06-21-08-32-51-s0HlLClm
+PT location written to: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/../mock_results/run_outputs/starsACDEF_192c_16r_14523389_pt_location.txt
+Loaded configuration from: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/mock_results/run_outputs/starsACDEF_192c_16r_14523389_summary.md
+Reference epoch: 55197.0 MJD (2010.0 yr)
+Loaded chain: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/../mock_results/run_outputs/starsACDEF_192c_16r_14523389_chain.fits
+MCMC chain (65536×83×1 Array{Float64, 3})
+Star names from summary: A, C, D, E, F
+[ Info: Preparing model
+┌ Info: Determined number of free variables
+└   D = 49
+┌ Info: Determined number type
+└   T = Float64
+ℓπcallback(θ): 0.000047 seconds
+∇ℓπcallback(θ): 0.001626 seconds (6 allocations: 180.969 KiB)
+
+=== Posterior summaries (median, 68% CI) ===
+Param                     Median  [     16%,      84%]
+M_IMBH [10⁴ M☉]            5.924  [   5.180,    6.664]
+plx [mas]                  0.191  [   0.187,    0.195]
+offsetx [mas]           -167.550  [-373.417,   41.451]
+offsety [mas]            713.838  [ 477.677,  873.037]
+A: a [AU]              37713.758  [8977.507, 180392.939]
+A: e                       0.898  [   0.658,    0.968]
+A: i [°]                 117.392  [ 109.031,  137.361]
+A: ω [°]                 -43.395  [-150.590,  152.437]
+A: Ω [°]                 -84.013  [-125.104,   56.681]
+A: tp [mjd]           -9016730.795  [-107436157.982, -909986.428]
+C: a [AU]               5513.104  [4254.465, 7618.498]
+C: e                       0.126  [   0.032,    0.414]
+C: i [°]                  73.261  [  61.908,   82.764]
+C: ω [°]                 -66.354  [-133.562,   82.897]
+C: Ω [°]                -152.029  [-162.288,   21.667]
+C: tp [mjd]           -194355.449  [-366230.751, -47091.951]
+D: a [AU]               6980.277  [4646.990, 9623.450]
+D: e                       0.188  [   0.050,    0.541]
+D: i [°]                  79.825  [  68.755,   88.542]
+D: ω [°]                  46.800  [ -88.862,  121.045]
+D: Ω [°]                 116.218  [ -62.044,  119.754]
+D: tp [mjd]           -293082.322  [-561296.508, -85626.091]
+E: a [AU]              13523.124  [10161.967, 23011.064]
+E: e                       0.862  [   0.603,    0.955]
+E: i [°]                  79.045  [  64.362,   98.251]
+E: ω [°]                 140.983  [ 104.391,  152.929]
+E: Ω [°]                 132.285  [  64.241,  135.293]
+E: tp [mjd]           -2062122.500  [-4993252.923, -1309979.662]
+F: a [AU]              12918.666  [11624.885, 15764.843]
+F: e                       0.053  [   0.012,    0.178]
+F: i [°]                  12.742  [   5.273,   29.515]
+F: ω [°]                  46.569  [-117.477,  146.552]
+F: Ω [°]                  99.578  [  -3.875,  162.950]
+F: tp [mjd]           -1071414.414  [-2414735.551, -635867.253]
+
+Generating corner plot...
+Corner plot saved.
+Generating orbit panels...
+Orbit panels saved.
+Generating posterior panels...
+Posterior panels saved.
+Generating plausibility diagnostics...
+Plausibility diagnostics saved.
+Generating phase / acceleration-alignment diagnostics...
+Phase / acceleration alignment diagnostics saved.
+Generating RV consistency check...
+RV consistency check saved.
+Generating acceleration posterior predictive check...
+Acceleration posterior predictive check saved.
+Generating IMBH position overlay figure...
+IMBH position overlay figure saved.
+Generating 3D orbit animation...
+3D orbit animation saved to: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/mock_results/run_outputs/starsACDEF_192c_16r_14523389_orbits_3d.mp4
+3D still frame (dark) saved to: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/mock_results/run_outputs/starsACDEF_192c_16r_14523389_orbits_3d_still_dark.png
+3D orbit animation (light) saved to: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/mock_results/run_outputs/starsACDEF_192c_16r_14523389_orbits_3d_light.mp4
+3D still frame (light) saved to: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/mock_results/run_outputs/starsACDEF_192c_16r_14523389_orbits_3d_still.png
+Generating residuals figure...
+Residuals figure saved.
+Posterior stats saved to: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/mock_results/run_outputs/starsACDEF_192c_16r_14523389_posterior_stats.txt
+
+Done. All plots written to: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/mock_results/run_outputs
