@@ -5,10 +5,15 @@ Utilities for orbital modelling of fast-moving stars in Omega Centauri using Oct
 
 ADDED FEATURES FROM THE octo_orbit_direct_likelihoods.jl FILE IN Ocen_IMBH_analysis:
 
-1. Adds "sigma_ra" and "sigma_dec" to the "StarData"
+- `StarData`: Adds "sigma_ra" and "sigma_dec" to the
    struct and updates the "stars" dictionary to include these position errors.
-2. Adds functions for mock observation generation: 
-   make_star(), mock_data(), stardata_struct(), build_mock_observations()
+- `make_star`: builds a `Visual{KepOrbit}` from input orbital elements.
+- `mock_data`: evaluates noiseless position, PM, acceleration, and RV from a
+   mock orbit at a given epoch.
+- `stardata_struct`: converts input orbit/system parameters into a
+  `StarData` object in the cluster-centered coordinate frame.
+- `build_mock_observations`: draws noisy mock position, PM, acceleration, RV,
+   z-prior, and escape-velocity observations.
 """
 
 # ========== Environment variables ==========
