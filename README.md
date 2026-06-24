@@ -1,5 +1,6 @@
 # Mock Data Fitting with Ocen_IMBH_analysis
 
+This readme isn't very good
  
 ## What Changed FROM Ocen_IMBH_analysis?
 

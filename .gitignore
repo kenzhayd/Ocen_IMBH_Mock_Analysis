@@ -1,0 +1,6 @@
+# Ignore IDE settings
+.vscode/
+.continue/
+
+# Ignore massive simulation/data folders
+mock_results/

@@ -94,7 +94,7 @@ checkpoint           = true
 # --- Slurm / HPC ---
 [slurm]
 account       = "def-vhenault"
-job_name      = "mock_MAP"
+job_name      = "mock_max_logpost"
 nodes         = 1
 cpus_per_task = 192
 mem_per_cpu   = "3G"
@@ -117,11 +117,11 @@ log_dir    = "../mock_results/logs"               # Slurm stdout/stderr and tee 
 [mock]
 enabled = true
           
-# System parameters (MAP)
-M_IMBH  = 77306.400872693033  # Solar masses
-plx     = 0.187909631720   # parallax [mas]
-offsetx = -122.205858303562
-offsety = 779.597275235741
+# System parameters 
+M_IMBH  = 63428.188701256993    # Solar masses
+plx     = 0.194037631899    # parallax [mas]
+offsetx = -136.391981772081
+offsety = 772.678117346523
 
 # Observation uncertainties (σ values) for mock data
 sigma_ra = 0.5       # Position RA uncertainty [mas]
@@ -138,8 +138,8 @@ sigma_acc_dec = 0.0118   # Acceleration Dec uncertainty [mas/yr²]
 sigma_rv = 3350.0         # Radial velocity uncertainty [m/s]
 
 
-# MAP posterior orbital parameters from Ocen_IMBH_analysis
-# From best-fit (MAP) sample of:
+# Posterior orbital parameters from Ocen_IMBH_analysis
+#Sample index 243695 of
 # starsACDEF_192c_18r_cont_10836842_chain.fits
 # period, eccentricity, inclination [rad], ω [rad], Ω [rad], theta [rad]
 
@@ -147,17 +147,16 @@ sigma_rv = 3350.0         # Radial velocity uncertainty [m/s]
 [mock.stars]
 
 [mock.stars.A]
-orbital_elements = [2092.194381543326, 0.346043688274, 2.134772053875, 2.399030601970, -2.382677416679, -2.976490100909]
+orbital_elements = [1742.492266784197, 0.560668674636, 2.346848256902, 3.009930277526, -2.196517158486, -2.992019583391]
 
 [mock.stars.C]
-orbital_elements = [2025.007695653237, 0.075045529353, 1.336752268041, -1.958141095396, -2.806011907901, -1.717021603579]
+orbital_elements = [2253.894969208533, 0.047279368601, 1.335279239253, 3.057377067795, -2.823694509911, -1.702768819719]
 
 [mock.stars.D]
-orbital_elements = [2207.728275371691, 0.274305505781, 1.476251971162, -1.075005024332, -1.011258633898, 0.865485505384]
+orbital_elements = [3086.704980821688, 0.084331429717, 1.474639751894, -1.532243035103, -1.001863515711, 0.888610279565]
 
 [mock.stars.E]
-orbital_elements = [6263.917572353033, 0.447984574223, 1.412980075811, 2.532959553669, 2.289976292102, 2.418223678182]
+orbital_elements = [7119.894533498357, 0.502670589295, 1.408540530364, 2.464969446310, 2.285994597414, 2.410224493155]
 
 [mock.stars.F]
-orbital_elements = [4726.515827804944, 0.135851615563, 0.461560169398, 1.768556391306, 3.017193692143, 1.428052585388]
-
+orbital_elements = [5405.142037710048, 0.068286787073, 0.425628982041, -1.137072201885, -0.088752602761, 1.426043923174]

@@ -507,16 +507,20 @@ Parameters:
 Returns:
 - MockOrbit containing a Visual{KepOrbit} object
 """
-function make_star(name; a, e, i, ω, Ω, tp, M, plx)
+function make_star(name; P, e, i, ω, Ω, θ, M, plx, epoch_mjd)
+
+    a_model = cbrt(M * P^2)
+    tp_model = θ_at_epoch_to_tperi(θ, epoch_mjd; 
+                               a=a_model, e=e, i=i, ω=ω, Ω=Ω, M=M)
 
     orbit = Visual{KepOrbit}(;
-        a=a,
+        a=a_model,
         e=e,
         i=i,
         ω=ω,
         Ω=Ω,
         M=M,
-        tp=tp,
+        tp=tp_model,
         plx=plx
     )
     return MockOrbit(name, orbit)
@@ -581,7 +585,7 @@ Returns:
 - StarData struct with noiseless observables and specified uncertainties
 """
 function stardata_struct(name;
-    a, e, i, ω, Ω, tp,
+    P, e, i, ω, Ω, θ,
     M,
     plx,
     t_ref,
@@ -592,11 +596,45 @@ function stardata_struct(name;
     sigma_pm_dec,
     sigma_acc_ra,
     sigma_acc_dec,
-    sigma_rv
+    sigma_rv,
+    offsetx,
+    offsety
 )
-    orbit = make_star(name; a, e, i, ω, Ω, tp, M=M, plx=plx)
+    orbit = make_star(name;
+        P=P,
+        e=e,
+        i=i,
+        ω=ω,
+        Ω=Ω,
+        θ=θ,
+        M=M,
+        plx=plx,
+        epoch_mjd=t_ref
+)
     obs = mock_data(orbit, epoch)
     
+    # Convert IMBH-centered offsets → cluster-centered offsets directly
+    # WITHOUT converting to absolute RA/Dec first.
+
+    # star offset relative to IMBH (mas)
+    dx_imbh = obs.raoff
+    dy_imbh = obs.decoff
+
+    # IMBH offset relative to cluster center (mas)
+    dx_cluster = offsetx
+    dy_cluster = offsety
+
+    # star offset relative to cluster center (mas)
+    dx_total = dx_cluster + dx_imbh
+    dy_total = dy_cluster + dy_imbh
+
+    # convert cluster-centered offsets → absolute RA/Dec
+    mas2deg = 1 / (3600 * 1000)
+
+    ra_deg  = ra_cm_deg  + dx_total * mas2deg/cosd(dec_cm_deg)
+    dec_deg = dec_cm_deg + dy_total * mas2deg
+
+
     v2D = hypot(obs.pmra, obs.pmdec)
 
     v2D_err = sqrt(
@@ -605,25 +643,24 @@ function stardata_struct(name;
         )
 
     return StarData(
-    name,
-    obs.raoff,
-    obs.decoff,
-    sigma_ra,
-    sigma_dec,
-    obs.pmra,
-    obs.pmdec,
-    obs.accra,
-    obs.accdec,
-    sigma_pm_ra,
-    sigma_pm_dec,
-    sigma_acc_ra,
-    sigma_acc_dec,
-    v2D,
-    v2D_err,
-    obs.rv,
-    sigma_rv
-)
-
+        name,
+        ra_deg,          
+        dec_deg,         
+        sigma_ra,
+        sigma_dec,
+        obs.pmra,
+        obs.pmdec,
+        obs.accra,
+        obs.accdec,
+        sigma_pm_ra,
+        sigma_pm_dec,
+        sigma_acc_ra,
+        sigma_acc_dec,
+        v2D,
+        v2D_err,
+        obs.rv,   
+        sigma_rv
+    )
 end
 
 
@@ -657,14 +694,21 @@ function build_mock_observations(star::StarData, epoch_mjd::Float64;
                                 )
    
     # 1. Single-epoch position with NOISE 
+    ra_rel_mas  = (star.ra  - ra_cm_deg)  * 3600 * 1000 * cosd(dec_cm_deg)
+    dec_rel_mas = (star.dec - dec_cm_deg) * 3600 * 1000
+
+# Add noise in mas
+    ra_noisy  = rand(Normal(ra_rel_mas,  star.sigma_ra))
+    dec_noisy = rand(Normal(dec_rel_mas, star.sigma_dec))
+
     astrom = PlanetRelAstromObs(
-            (epoch = [epoch_mjd],
-            ra    = [rand(Normal(star.ra,  star.sigma_ra))],
-            dec   = [rand(Normal(star.dec, star.sigma_dec))],
-            σ_ra  = [star.sigma_ra],
-            σ_dec = [star.sigma_dec],
-            cor   = [0.0]);
-            name = "$(star.name)_pos"
+        (epoch=[epoch_mjd],
+        ra=[ra_noisy],
+        dec=[dec_noisy],
+        σ_ra=[star.sigma_ra],
+        σ_dec=[star.sigma_dec],
+        cor=[0.0]);
+        name = "$(star.name)_pos"
         )
     
     # 2. Proper motion with NOISE 
@@ -720,6 +764,8 @@ function build_mock_observations(star::StarData, epoch_mjd::Float64;
 
     return astrom, pm, acc, rv, zp, ev
 end
+
+
 # ========== END MOCK MODIFICATIONS ==========
 
 end
