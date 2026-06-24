@@ -1,5 +1,16 @@
 module octo_utils
 
+"""
+Utilities for orbital modelling of fast-moving stars in Omega Centauri using Octofitter
+
+ADDED FEATURES FROM THE octo_orbit_direct_likelihoods.jl FILE IN Ocen_IMBH_analysis:
+
+1. Adds "sigma_ra" and "sigma_dec" to the "StarData"
+   struct and updates the "stars" dictionary to include these position errors.
+2. Adds functions for mock observation generation: 
+   make_star(), mock_data(), stardata_struct(), build_mock_observations()
+"""
+
 # ========== Environment variables ==========
 ENV["JULIA_NUM_THREADS"] = "auto"
 ENV["OCTOFITTERPY_AUTOLOAD_EXTENSIONS"] = "yes"
@@ -13,8 +24,6 @@ using Octofitter
 using OctofitterRadialVelocity
 using Distributions
 using Statistics
-
-
 
 # ========== Define StarData Type ==========
 """
@@ -402,8 +411,7 @@ Returns:
 function build_star_observations(star::StarData, epoch_mjd::Float64;
                                   include_rv::Bool=true,
                                   z_prior_sigma::Union{Nothing,Float64}=nothing,
-                                  include_esc_vel::Bool=false,
-                                  acceleration_type::String="vector")
+                                  include_esc_vel::Bool=false)
     # 1. Single-epoch position relative to cluster center.
     # RA offset is multiplied by cos(δ_ref) to give Δα* (east in mas), consistent
     # with the α* convention used by raoff(sol), pmra(sol), and the input PM/accel data.
@@ -422,27 +430,12 @@ function build_star_observations(star::StarData, epoch_mjd::Float64;
         name="$(star.name)_pm"
     )
 
-    # 3. Acceleration at same epoch — vector components or magnitude only
-    acc = if acceleration_type == "vector"
-        PlanetAccelObs(
-            (epoch=[epoch_mjd], accra=[star.acc_ra], accdec=[star.acc_dec],
-             σ_accra=[star.sigma_acc_ra], σ_accdec=[star.sigma_acc_dec], cor=[0.0]);
-            name="$(star.name)_acc"
-        )
-    elseif acceleration_type == "magnitude"
-        # Propagate uncertainty: σ_|a| = √((aα·σ_aα)² + (aδ·σ_aδ)²) / |a|
-        # Guard against zero magnitude (undetected acceleration): fall back to RSS of σ components.
-        _accmag = hypot(star.acc_ra, star.acc_dec)
-        _σ_accmag = _accmag > 0 ?
-            sqrt((star.acc_ra * star.sigma_acc_ra)^2 + (star.acc_dec * star.sigma_acc_dec)^2) / _accmag :
-            hypot(star.sigma_acc_ra, star.sigma_acc_dec)
-        PlanetAccelMagObs(
-            (epoch=[epoch_mjd], accmag=[_accmag], σ_accmag=[_σ_accmag]);
-            name="$(star.name)_accmag"
-        )
-    else
-        error("Unknown acceleration_type: \"$(acceleration_type)\". Expected \"vector\" or \"magnitude\".")
-    end
+    # 3. Acceleration at same epoch
+    acc = PlanetAccelObs(
+        (epoch=[epoch_mjd], accra=[star.acc_ra], accdec=[star.acc_dec],
+         σ_accra=[star.sigma_acc_ra], σ_accdec=[star.sigma_acc_dec], cor=[0.0]);
+        name="$(star.name)_acc"
+    )
 
     # 4. Radial velocity (peculiar, relative to cluster systemic RV)
     rv = nothing
@@ -494,12 +487,12 @@ Generate a Keplerian orbit for a mock star around a central mass.
 
 Parameters:
 - name: Star identifier 
-- a: Semi-major axis [AU]
+- p: Period [yrs]
 - e: Eccentricity
 - i: Inclination [rad]
 - ω: Argument of periastron [rad]
 - Ω: Longitude of ascending node [rad]
-- tp: Time of periastron passage (MJD)
+- θ: Position angle at reference epoch [rad]
 - M: Central mass [solar masses]
 - plx: Parallax [mas]
 

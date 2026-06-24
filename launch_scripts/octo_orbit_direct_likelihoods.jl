@@ -16,7 +16,14 @@ Usage:
     # the run to resume (submit_job.jl resolves the PT folder automatically).
 
 If no config path is given, falls back to ../configs/default.toml.
+
+ADDED FEATURES FROM THE octo_orbit_direct_likelihoods.jl FILE IN Ocen_IMBH_analysis:
+
+Checks the config for "[mock].enabled". If true, 
+it bypasses the real data dictionary and generates mock observations from 
+provided orbital elements, with gaussian noise.
 """
+
 
 ENV["OCTOFITTERPY_AUTOLOAD_EXTENSIONS"] = "yes"
 
@@ -152,14 +159,13 @@ for name in star_names
     
     
     
-    # use mock data (with noise) or real data (direct values)
+    # use mock data or real data 
     if is_mock_enabled
         a, p, ac, r, zp, ev = octo_utils.build_mock_observations(star, epoch_mjd;
-                            include_rv, z_prior_sigma, include_esc_vel=include_ev, include_acc=include_acc)
+                            include_rv, z_prior_sigma, include_esc_vel=include_ev)
     else
         a, p, ac, r, zp, ev = octo_utils.build_star_observations(star, epoch_mjd;
-                            include_rv, z_prior_sigma, include_esc_vel=include_ev,
-                            include_acc=include_acc)
+                            include_rv, z_prior_sigma, include_esc_vel=include_ev)
     end 
 
 
