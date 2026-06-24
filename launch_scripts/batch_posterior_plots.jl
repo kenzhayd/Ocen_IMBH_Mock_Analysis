@@ -20,7 +20,7 @@ include(joinpath(@__DIR__,"parse_config.jl"))
 # Usage: julia batch_posterior_plots.jl <directory> OR set run_directory variable.
 
 # Direcotry with runs to plot 
-run_directory = "C:\\Users\\macke\\Clusters\\Ocen_IMBH_Mock_Analysis\\mock_results\\max_logpost_192c_17r_June18"
+run_directory = raw"C:\Users\macke\Clusters\Ocen_IMBH_Mock_Analysis\mock_results\noOneil_16r_192c_June24"
 stars = ["A", "C", "D", "E", "F"] 
 
 # Output subdirectory

@@ -20,7 +20,7 @@ using CairoMakie
 
 # Select a directory with a bunch of runs to be summarized
 # Make sure all the runs in this directory have the same config file, or face the error message. 
-run_dir = raw"C:\Users\macke\Clusters\Ocen_IMBH_Mock_Analysis\mock_results\rand3_192c_16r_June21";
+run_dir = raw"C:\Users\macke\Clusters\Ocen_IMBH_Mock_Analysis\mock_results\noOneil_16r_192c_June24";
 
 outname = basename(run_dir)
 outdir = joinpath(run_dir, outname)
