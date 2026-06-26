@@ -33,12 +33,16 @@ include("octo_utils.jl")
 # ===================== CONFIGURATION =====================
 
 # All outputs are saved to output_dir
-output_dir = raw"C:\Users\macke\Clusters\Ocen_IMBH_Mock_Analysis\mock_results\forcast_curvature\test"
+output_dir = raw"C:\Users\macke\Clusters\Ocen_IMBH_Mock_Analysis\mock_results\forcast_curvature\updated_5000_samples"
 mkpath(output_dir) 
 
 # Number of posterior orbit samples used to estimate the
 # distribution of future curvature residuals
 N_samp = 5000
+
+# Number of posterior orbits drawn on the orbit panel. This matches the
+# plot_chain.jl sky-plane orbit panels.
+N_orbit_plot = 300
 
 # Assumed astrometric uncertainty of position measurements (mas)
 sigma_astrometry = 0.5
@@ -47,8 +51,13 @@ sigma_astrometry = 0.5
 epoch_year = 2010.0
 epoch_mjd  = Octofitter.years2mjd(epoch_year)
 
-# Colors
+# Same star colour convention as plot_chain.jl's orbit panels.
+star_names = ["A", "C", "D", "E", "F"]
 w = Makie.wong_colors()
+star_colors = Dict{String, Any}(
+    name => w[mod1(k + 1, length(w))]
+    for (k, name) in enumerate(star_names)
+)
 
 # Years to forcast orbital curvature
 start_year = 2023.0
@@ -235,20 +244,23 @@ open(stats_file_path, "w") do stats_io
     Chain: $chain_path
     Epoch: $epoch_year yr ($epoch_mjd MJD)
     N_samp: $N_samp
+    N_orbit_plot: $N_orbit_plot
     Sigma_astrometry: $sigma_astrometry mas
     Forecast Years: $start_year to $end_year
     """)
     write(stats_io, "\n" * "="^50 * "\n") 
 
+frac_3sigma_by_star = Dict{String, Vector{Float64}}()
 
 # Main loop 
-for star in ["A","C", "D", "E", "F"]
+for star in star_names
 
     # ================= OCTOFITTER MODEL POSITIONS =================
     offsetx = median(chain[:offsetx])
     offsety = median(chain[:offsety])
 
-    ra_samples, dec_samples = sample_orbit_trajectory(chain, idx_all, star, epoch_mjd, N_samp)
+    star_color = star_colors[star]
+    ra_samples, dec_samples = sample_orbit_trajectory(chain, idx_all, star, epoch_mjd, N_orbit_plot)
     
     # ================= OBSERVED POSITIONS =================
     real = octo_utils.stars[star]
@@ -283,6 +295,7 @@ for star in ["A","C", "D", "E", "F"]
 
     # Fraction of residuals above 3-sigma of astrometric uncertainty for each year
     frac_3sigma = mapslices(x -> sum(x .> 3 * sigma_astrometry) / length(x), pos_residuals; dims=2)[:]
+    frac_3sigma_by_star[star] = frac_3sigma
     
     # Linear Trajectory (2002 to end_year) 
     baseline_years = 2002.0:0.1:end_year
@@ -335,13 +348,15 @@ for star in ["A","C", "D", "E", "F"]
         xlabel="Δα* [mas]",
         ylabel="Δδ [mas]",
         xreversed=true,
-        title="Star $star: Astrometry"
+        title="a.",
+        titlealign =:left
     )
 
     ax2 = Axis(fig[2, 1:2];
     xlabel="Year",
     ylabel="Residual [mas]",
-    title="Curvature Residual Growth",
+    title="b.",
+    titlealign =:left
     )
 
     Colorbar(fig[1, 2];
@@ -367,22 +382,34 @@ for star in ["A","C", "D", "E", "F"]
             ax1,
             ra,
             dec;
-            color = :gray,     
-            linewidth = 1.0,       
-            alpha = 0.4            
+            color = (star_color, 0.5),
+            linewidth = 0.5,
+            alpha = 0.5
         )
     end
     
+
     # Plot timeline colourbar 
     lines!(ax1,
         ra_full,
         dec_full;
         color = baseline_years,  
         colormap = :viridis,       
-        linewidth = 3.5,      
-    )         
+        linewidth = 6,      
+    )   
+    
+    # Overlay observed baseline
+    obs_mask = baseline_years .<= 2023
 
-    # Calculate limits based on the full linear trajectory 
+    lines!(ax1,
+        ra_full[obs_mask],
+        dec_full[obs_mask];
+        color = :white,
+        linewidth = 1,
+        linestyle = :dash,
+    )
+
+    # Calculate limits 
     ra_min, ra_max = extrema(ra_full)
     dec_min, dec_max = extrema(dec_full)
 
@@ -390,77 +417,42 @@ for star in ["A","C", "D", "E", "F"]
     xlims!(ax1, ra_min, ra_max)
     ylims!(ax1, dec_min, dec_max)
 
-    # Plotting PM vectors using adapted plot_chain.jl script
-    # Find the span of the plot to help scale pm vectors
-    axis_span = max(
-    ra_max - ra_min,
-    dec_max - dec_min)
-    # Get the PM for the current star from octo_utils
-    current_star_data = octo_utils.stars[star]
-    current_pm_ra = current_star_data.pm_ra  # mas/yr
-    current_pm_dec = current_star_data.pm_dec # mas/yr
-    current_pm_mag = sqrt(current_pm_ra^2 + current_pm_dec^2)
-    # Scaling factor
-    target_fraction = 0.15
-    scale_pm = (target_fraction * axis_span) / max(current_pm_mag)
-    # Draw the arrow for the star's PM
-    arrows!(ax1,
-            [obs_ra], [obs_dec], 
-            [current_pm_ra * scale_pm], [current_pm_dec * scale_pm]; 
-            color = w[6], 
-            linewidth = 5, 
-            tipwidth=9,
-            tiplength=9
-        )
-
     # Plot observed star position at the reference epoch
     scatter!(ax1, [obs_ra], [obs_dec];
-        color= w[6], markersize=16, marker=:star5, 
-        strokecolor=:black, strokewidth=0.5
-    )
-
-    # Referench epoch marker
-    text!(ax1, "Reference Epoch";
-    position = (obs_ra+0.75, obs_dec+0.75),                                
-    fontsize = 12,               
-    color = :black,                
+        color= w[2], markersize=18, marker=:star5, 
+        strokecolor=:black, strokewidth=0.5, label= "Star $star"
     )
     
-    # Legend 
-    # axislegend(ax1;
-    #     position = :lt,          
-    #     framevisible = false,    
-    #     tellheight = false,
-    #     tellwidth = false,
-    #     padding = (5, 5, 5, 5)  
-    #     )
+    # Star labels
+    if star in ["E", "D", "F"]
+        text!(ax1, "Star $star";
+            position=(0.97, 0.95),
+            align=(:right, :top),
+            space=:relative,
+            fontsize=18
+        )
+    else 
+        text!(ax1, "Star $star"; position=(0.02, 0.95), align=(:left, :top),
+        space=:relative, fontsize=18)
+    end
 
     # ================= RESIDUAL DISTRIBUTION PLOT =================
     
     # Plot residuals for total position (Octofitter trajectory - linear trajectory)
     lines!(ax2, forecast_years, med_residual;
-        color = w[3],
+        color = star_color,
         linewidth = 3,
         label = "Median |Δr|"
     )
 
     # 1-Sigma spread
     band!(ax2, forecast_years, residual_lo, residual_hi;
-    color = w[3], alpha=0.2, label="±1σ")
-    
-    # # 3-Sigma spread (compresses plots awkwardly)
-    # band!(ax2, forecast_years, three_sigma_lo, three_sigma_hi;
-    # color = w[3], alpha=0.1, label="±3σ")
+    color = star_color, alpha=0.2, label="±1σ |Δr|")
 
-    # Astrometric 1-sigma uncertainty
-    hlines!(ax2, sigma_astrometry;
-        color= w[6], label="1σ detection",
-        linewidth=2
-    )
     
     # Astrometric 3-sigma uncertainty
     hlines!(ax2, 3*sigma_astrometry;
-        color=w[6], linestyle=:dot, label="3σ detection",
+        color=:black, linestyle=:dot, label="3σ detection",
         linewidth=2
     )
 
@@ -474,29 +466,21 @@ for star in ["A","C", "D", "E", "F"]
     plot_filename = joinpath(output_dir, "curvature_forecast_star$(star).png")
         save(plot_filename, fig)
         println("Saved plot for Star $star to: $plot_filename")
-
-
+    
     # ================= FIGURE 2: FRACTIONS OF SIGNIFICANT RESIDUALS =================
     
     fig2 = Figure(size = (800, 400))
 
     ax_frac = Axis(fig2[1, 1];
         xlabel="Year",
-        title="Star $star: Fraction of Residuals Exceeding 1σ and 3σ"
-    )
-
-    # Fractions of residuals above 1-sigma astrometric detectability 
-    lines!(ax_frac, forecast_years, frac_1sigma;
-        color = w[3],
-        linewidth = 3,
-        label = L"\frac{N(|r|  >  \sigma)}{N_{\mathrm{total}}}"
+        title="Star $star"
     )
 
     # Fractions of residuals above 3-sigma astrometric detectability 
     lines!(ax_frac, forecast_years, frac_3sigma;
         color = w[6],
         linewidth = 3,
-        label = L"\frac{N(|r|  >  3\sigma)}{N_{\mathrm{total}}}"
+        label = "Fraction of Residuals > 3σ"
     )
 
     ylims!(ax_frac, 0, 1)
@@ -510,7 +494,35 @@ for star in ["A","C", "D", "E", "F"]
     save(plot_filename_frac, fig2)
     println("Saved fractions plot for Star $star to: $plot_filename_frac")
 
+
 end
+
+# ================= FIGURE 2: FRACTION ABOVE 3-SIGMA FOR ALL STARS =================
+
+fig2 = Figure(size = (800, 400))
+
+ax_frac = Axis(fig2[1, 1];
+    xlabel="Year",
+    #ylabel="Fraction of Residuals Exceeding 3σ",
+)
+
+for star in star_names
+    lines!(ax_frac, forecast_years, frac_3sigma_by_star[star];
+        color = star_colors[star],
+        linewidth = 3,
+        label = "Star $star"
+    )
+end
+
+ylims!(ax_frac, 0, 1)
+xlims!(ax_frac, start_year, end_year)
+axislegend(ax_frac; position=:lt, framevisible=true, backgroundcolor=:white)
+
+display(fig2)
+
+plot_filename_frac = joinpath(output_dir, "residual_fractions_3sigma_all_stars.png")
+save(plot_filename_frac, fig2)
+println("Saved combined 3-sigma fractions plot to: $plot_filename_frac")
 
 end 
 println("\nAll saved to directory: $output_dir")
