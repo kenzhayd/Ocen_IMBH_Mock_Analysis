@@ -1,0 +1,121 @@
+Loaded config: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/mock_rand_2_noOneil.toml
+Mock data fitting: generating synthetic data from config parameterset
+[ Info: Preparing model
+┌ Info: Determined number of free variables
+└   D = 49
+┌ Info: Determined number type
+└   T = Float64
+ℓπcallback(θ): 0.000040 seconds
+∇ℓπcallback(θ): 0.002080 seconds (7 allocations: 181.062 KiB)
+Run summary written to /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/../mock_results/run_outputs/starsACDEF_192c_16r_14675899_summary.md
+┌ Warning: This model has priors that cannot be sampled IID.
+└ @ OctofitterPigeonsExt ~/projects/def-vhenault/kenzhayd/Octofitter_imbh.jl/ext/OctofitterPigeonsExt/OctofitterPigeonsExt.jl:105
+[ Info: Sampler running with multiple threads     : true
+[ Info: Likelihood evaluated with multiple threads: false
+┌ Info: Starting values not provided for all parameters! Guessing starting point using global optimization:
+│   num_params = 49
+└   num_fixed = 0
+┌ Warning: The initial guess parameters fell outside the 0.00001 or 0.9999 quantile range of the priors, so global optimization search is disabled. Returning initial guess only, which may be far from the global mode.
+└ @ Octofitter ~/projects/def-vhenault/kenzhayd/Octofitter_imbh.jl/src/initialization.jl:553
+┌ Info: Found sample of initial positions
+│   logpost_range = (-637.3286860207833, -629.622075609362)
+└   mean_logpost = -631.3093674045554
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  scans     restarts      Λ        Λ_var      time(s)    allc(B)  log(Z₁/Z₀)   min(α)     mean(α)    min(αₑ)   mean(αₑ) 
+────────── ────────── ────────── ────────── ────────── ────────── ────────── ────────── ────────── ────────── ──────────
+        2          0       8.85       8.32        1.1   8.79e+07  -4.43e+07          0      0.955          1          1 
+        4          0       13.1       14.2      0.605   2.79e+06     -9e+05          0      0.929          1          1 
+        8          0       16.7       16.1       1.19   5.63e+06   -1.4e+05          0      0.915      0.999          1 
+       16          0       19.8       20.7       2.39   1.13e+07  -2.49e+03          0      0.894      0.999          1 
+       32          0       23.1       23.7       4.86   1.98e+07       -703   4.36e-70      0.878          1          1 
+       64          0       24.8       12.6       12.1   3.06e+09   4.31e+03   9.51e-12      0.902          1          1 
+      128          0       28.1       15.3       23.3      6e+09       -737     0.0707      0.887          1          1 
+      256          0       32.3       16.4       46.5   1.17e+10       -526      0.286      0.873          1          1 
+      512          0       35.2       17.4       92.1   2.28e+10       -315       0.57      0.863          1          1 
+ 1.02e+03          2       35.7         17        183   4.51e+10       -292      0.465      0.862          1          1 
+ 2.05e+03          4       34.5       16.9        360   9.04e+10       -282      0.577      0.866          1          1 
+  4.1e+03         16       31.5       16.8        703    1.8e+11       -275       0.77      0.874          1          1 
+ 8.19e+03         29       30.3       18.6    1.4e+03    3.6e+11       -263      0.475      0.872          1          1 
+ 1.64e+04         38       30.9       21.7   2.82e+03   7.15e+11       -234      0.615      0.862          1          1 
+ 3.28e+04         49       30.9       20.8   5.68e+03    1.4e+12       -218      0.775      0.865          1          1 
+ 6.55e+04         85       30.5       21.5   1.14e+04   2.82e+12       -215      0.801      0.864          1          1 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+MCMC chain (65536×83×1 Array{Float64, 3})
+PT exec folder (intermediate checkpoints): /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/launch_scripts/results/all/2026-06-25-02-43-13-xfpDXzP4
+PT location written to: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/../mock_results/run_outputs/starsACDEF_192c_16r_14675899_pt_location.txt
+Loaded configuration from: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/mock_results/run_outputs/starsACDEF_192c_16r_14675899_summary.md
+Reference epoch: 55197.0 MJD (2010.0 yr)
+Loaded chain: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/../mock_results/run_outputs/starsACDEF_192c_16r_14675899_chain.fits
+MCMC chain (65536×83×1 Array{Float64, 3})
+Star names from summary: A, C, D, E, F
+[ Info: Preparing model
+┌ Info: Determined number of free variables
+└   D = 49
+┌ Info: Determined number type
+└   T = Float64
+ℓπcallback(θ): 0.000051 seconds
+∇ℓπcallback(θ): 0.001681 seconds (6 allocations: 180.969 KiB)
+
+=== Posterior summaries (median, 68% CI) ===
+Param                     Median  [     16%,      84%]
+M_IMBH [10⁴ M☉]            4.898  [   4.228,    5.589]
+plx [mas]                  0.190  [   0.186,    0.194]
+offsetx [mas]             41.165  [ -17.665,  174.102]
+offsety [mas]            895.100  [ 786.059,  999.428]
+A: a [AU]              42066.907  [18661.879, 78746.235]
+A: e                       0.936  [   0.851,    0.979]
+A: i [°]                 135.446  [ 117.136,  152.006]
+A: ω [°]                 109.592  [  76.950,  159.000]
+A: Ω [°]                -134.583  [-156.918,  -35.637]
+A: tp [mjd]           -12051814.081  [-33309967.855, -3323842.134]
+C: a [AU]             202344.274  [60308.363, 401104.228]
+C: e                       0.970  [   0.942,    0.987]
+C: i [°]                  69.653  [  57.357,   75.224]
+C: ω [°]                  17.415  [-152.508,   77.766]
+C: Ω [°]                 -75.450  [-160.110,   33.612]
+C: tp [mjd]           -25221.786  [-190279277.556, 28656.024]
+D: a [AU]              63327.180  [9073.733, 220820.452]
+D: e                       0.957  [   0.543,    0.985]
+D: i [°]                  91.625  [  86.451,   97.478]
+D: ω [°]                   0.916  [-141.318,  157.535]
+D: Ω [°]                 119.764  [ -58.495,  125.018]
+D: tp [mjd]           -123751.790  [-67196448.284, 5613.911]
+E: a [AU]              15079.454  [12277.085, 19848.947]
+E: e                       0.946  [   0.692,    0.967]
+E: i [°]                  44.558  [  25.071,   71.082]
+E: ω [°]                 123.452  [  30.226,  147.708]
+E: Ω [°]                 136.068  [-114.334,  152.074]
+E: tp [mjd]           -2697507.148  [-4651992.680, -1935465.215]
+F: a [AU]              12568.081  [10953.749, 17229.703]
+F: e                       0.136  [   0.042,    0.316]
+F: i [°]                  14.231  [   4.769,   29.624]
+F: ω [°]                  41.200  [-114.014,  122.575]
+F: Ω [°]                   2.137  [ -61.855,  171.854]
+F: tp [mjd]           -362125.535  [-2808750.682, -35221.211]
+
+Generating corner plot...
+Corner plot saved.
+Generating orbit panels...
+Orbit panels saved.
+Generating posterior panels...
+Posterior panels saved.
+Generating plausibility diagnostics...
+Plausibility diagnostics saved.
+Generating phase / acceleration-alignment diagnostics...
+Phase / acceleration alignment diagnostics saved.
+Generating RV consistency check...
+RV consistency check saved.
+Generating acceleration posterior predictive check...
+Acceleration posterior predictive check saved.
+Generating IMBH position overlay figure...
+IMBH position overlay figure saved.
+Generating 3D orbit animation...
+3D orbit animation saved to: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/mock_results/run_outputs/starsACDEF_192c_16r_14675899_orbits_3d.mp4
+3D still frame (dark) saved to: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/mock_results/run_outputs/starsACDEF_192c_16r_14675899_orbits_3d_still_dark.png
+3D orbit animation (light) saved to: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/mock_results/run_outputs/starsACDEF_192c_16r_14675899_orbits_3d_light.mp4
+3D still frame (light) saved to: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/mock_results/run_outputs/starsACDEF_192c_16r_14675899_orbits_3d_still.png
+Generating residuals figure...
+Residuals figure saved.
+Posterior stats saved to: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/mock_results/run_outputs/starsACDEF_192c_16r_14675899_posterior_stats.txt
+
+Done. All plots written to: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/mock_results/run_outputs

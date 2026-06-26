@@ -1,6 +1,6 @@
 # noOneil_16r_192c_June24 
 
-Number of runs: 5
+Number of runs: 8
 
 ## Results Summary
 
@@ -8,57 +8,57 @@ Number of runs: 5
 
 #### M_IMBH
 - Input value: 63825.866208654894
-- Median recovered: 43230.00000000001
-- Mean recovered: 44852.0
-- Std of recovered: 6428.39560077007
+- Median recovered: 48570.0
+- Mean recovered: 48881.25
+- Std of recovered: 7996.701887117497
 
 #### plx
 - Input value: 0.183920077278
 - Median recovered: 0.19
-- Mean recovered: 0.19019999999999998
-- Std of recovered: 0.0004472135954999583
+- Mean recovered: 0.19024999999999997
+- Std of recovered: 0.0004629100498862762
 
 #### offsetx
 - Input value: -21.609949303701
-- Median recovered: 80.904
-- Mean recovered: 5.573799999999994
-- Std of recovered: 256.10419646249454
+- Median recovered: 61.034499999999994
+- Mean recovered: 92.13275
+- Std of recovered: 390.9043054569567
 
 #### offsety
 - Input value: 521.385138547764
-- Median recovered: 495.422
-- Mean recovered: 513.5364000000001
-- Std of recovered: 431.5803913754655
+- Median recovered: 696.178
+- Mean recovered: 606.89225
+- Std of recovered: 356.19849134185597
 
 ### Semi-Major Axes
 
 #### A_a
 - Input value: 8290.54301830297
-- Median recovered: 119672.284
-- Mean recovered: 115038.5382
-- Std of recovered: 58677.36900325878
+- Median recovered: 125845.80900000001
+- Mean recovered: 116663.09912500001
+- Std of recovered: 58704.438917205756
 
 #### C_a
 - Input value: 6147.641637739043
-- Median recovered: 20295.272
-- Mean recovered: 51593.2626
-- Std of recovered: 64566.91740796256
+- Median recovered: 60409.322499999995
+- Mean recovered: 98781.009125
+- Std of recovered: 96887.75408035835
 
 #### D_a
 - Input value: 7495.182650722448
-- Median recovered: 30141.886
-- Mean recovered: 36426.081
-- Std of recovered: 26336.266662203805
+- Median recovered: 45285.6275
+- Mean recovered: 39034.885875
+- Std of recovered: 26682.740310137142
 
 #### E_a
 - Input value: 8749.393007848068
-- Median recovered: 27189.677
-- Mean recovered: 24284.6314
-- Std of recovered: 12544.110777332857
+- Median recovered: 18472.341
+- Mean recovered: 21680.911625
+- Std of recovered: 10323.868377999788
 
 #### F_a
 - Input value: 12355.185881904456
-- Median recovered: 14430.629
-- Mean recovered: 31374.792999999994
-- Std of recovered: 26269.97753383159
+- Median recovered: 13602.071
+- Mean recovered: 24586.502125
+- Std of recovered: 21964.430642501356
 
