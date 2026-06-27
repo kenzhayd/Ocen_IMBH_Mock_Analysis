@@ -262,3 +262,67 @@ for (k, idx) in enumerate(idx_random)
                           target_M=target_M,
                           label=label)
 end
+
+# ===================== SAMPLES OF DIFFERENT TARGET MASSES ===================== 
+
+tol_random = 6000.0
+n_random = 1
+targets = [30000, 40000]
+
+for m in targets
+    idx_random = random_mass_indices(Mvals, m;
+                                    tol=tol_random,
+                                    n=n_random)
+
+    println("\n=== Random samples near M=$(m) (±$(tol_random) Msun) ===")
+
+    for (k, idx) in enumerate(idx_random)
+
+        M_sample = Mvals[idx]
+        ΔM = abs(M_sample - m)
+
+        println("\n--- Random sample $(k) ---")
+        println("Index = $idx,  M = $M_sample,  ΔM = $ΔM")
+
+        println("\nOrbital elements for random sample $(k):")
+        for star in star_names
+            println("Star $star")
+            println("-------------------------")
+            for p in orbit_params
+                try
+                    val = get_sample_value(chain, idx, star, p)
+                    println(rpad(p, 5), " = ", val)
+                catch
+                end
+            end
+            println()
+        end
+
+        println("System parameters for random sample $(k):")
+        for p in ["M","plx","offsetx","offsety"]
+            sym = Symbol(p)
+            println(rpad(p, 8), " = ", col(chain, sym)[idx])
+        end
+
+        label = @sprintf("Random mass sample %d (M ≈ %.3f, ΔM ≈ %.3f)",
+                        k, M_sample, ΔM)
+
+        print_mock_toml_block(chain, star_names, idx;
+                            target_M=m,
+                            label=label)
+    end
+end
+
+# ===================== MINIMUM MASS SAMPLE ===================== 
+
+idx_minM = argmin(Mvals)
+
+println("Minimum mass sample:")
+println("  Index = $idx_minM")
+println("  M = $(Mvals[idx_minM])")
+println("  logpost = $(logpost[idx_minM])")
+
+print_mock_toml_block(chain, star_names, idx_minM;
+                      label="Minimum mass sample")
+
+
