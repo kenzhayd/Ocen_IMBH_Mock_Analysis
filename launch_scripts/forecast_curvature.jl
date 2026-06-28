@@ -1,7 +1,7 @@
 """
 Forecast orbital curvature for future observations.
 
-Uses chain from real-data fits to compute expected 
+Uses chain from the primary real-data fit to compute expected 
 growth of curvature residuals over time. 
 Suggests a timeline for when orbital curvature will 
 be significant enough to constrain accelerations.
