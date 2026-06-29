@@ -33,7 +33,7 @@ include("octo_utils.jl")
 # ===================== CONFIGURATION =====================
 
 # All outputs are saved to output_dir
-output_dir = raw"C:\Users\macke\Clusters\Ocen_IMBH_Mock_Analysis\mock_results\forcast_curvature\updated_5000_samples"
+output_dir = raw"C:\Users\macke\Clusters\Ocen_IMBH_Mock_Analysis\mock_results\forcast_curvature\updated_5000_samples_2"
 mkpath(output_dir) 
 
 # Number of posterior orbit samples used to estimate the
@@ -384,7 +384,7 @@ for star in star_names
             dec;
             color = (star_color, 0.5),
             linewidth = 0.5,
-            alpha = 0.5
+            alpha = 0.3
         )
     end
     
@@ -395,7 +395,7 @@ for star in star_names
         dec_full;
         color = baseline_years,  
         colormap = :viridis,       
-        linewidth = 6,      
+        linewidth = 8,      
     )   
     
     # Overlay observed baseline
@@ -405,7 +405,7 @@ for star in star_names
         ra_full[obs_mask],
         dec_full[obs_mask];
         color = :white,
-        linewidth = 1,
+        linewidth = 2,
         linestyle = :dash,
     )
 

@@ -165,7 +165,7 @@ for name in star_names
                             include_rv, z_prior_sigma, include_esc_vel=include_ev)
     else
         a, p, ac, r, zp, ev = octo_utils.build_star_observations(star, epoch_mjd;
-                            include_rv, z_prior_sigma, include_esc_vel=include_ev)
+                            include_rv, z_prior_sigma, include_esc_vel=include_ev, include_acc=include_acc)
     end 
 
 
