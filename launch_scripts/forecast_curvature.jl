@@ -42,7 +42,7 @@ N_samp = 5000
 
 # Number of posterior orbits drawn on the orbit panel. This matches the
 # plot_chain.jl sky-plane orbit panels.
-N_orbit_plot = 300
+N_orbit_plot = 50
 
 # Assumed astrometric uncertainty of position measurements (mas)
 sigma_astrometry = 0.5
@@ -344,29 +344,43 @@ for star in star_names
     fig = Figure(size = (900, 800), 
                  layout = GridLayout(2, 2))
     
+
     ax1 = Axis(fig[1, 1];
         xlabel="Δα* [mas]",
         ylabel="Δδ [mas]",
         xreversed=true,
-        title="a.",
-        titlealign =:left
+        titlealign =:left,
+        ylabelsize = 26,
+        xlabelsize = 26,
+        xticklabelsize = 24,
+        yticklabelsize = 24
+        
     )
 
     ax2 = Axis(fig[2, 1:2];
     xlabel="Year",
     ylabel="Residual [mas]",
-    title="b.",
-    titlealign =:left
+    titlealign =:left,
+    xticks = [2025, 2030, 2035],
+    xminorticks = 2023:1:2035,
+    xminorticksvisible=true,
+    xminorticksize=6,
+    ylabelsize = 26,
+    xlabelsize = 26,
+    xticklabelsize = 24,
+    yticklabelsize = 24
     )
 
     Colorbar(fig[1, 2];
-         colormap = :viridis,
+         colormap = :greys,
          limits = (minimum(baseline_years), maximum(baseline_years)),
          width = 25,
          height = Auto(),
-         ticks = [2002, 2010, 2020, 2035],
-         # label = "Epoch [yr]",
-         labelsize = 14,
+         ticks = [2005, 2015, 2025, 2035],
+         minorticks = 2002:1:2035,
+         minorticksvisible=false,
+         minorticksize=6,
+         ticklabelsize = 24,
          labelrotation = π/2,   
          valign = :center,
          halign = :left)
@@ -384,7 +398,7 @@ for star in star_names
             dec;
             color = (star_color, 0.5),
             linewidth = 0.5,
-            alpha = 0.3
+            alpha = 0.9
         )
     end
     
@@ -394,7 +408,7 @@ for star in star_names
         ra_full,
         dec_full;
         color = baseline_years,  
-        colormap = :viridis,       
+        colormap = :greys,       
         linewidth = 8,      
     )   
     
@@ -429,11 +443,11 @@ for star in star_names
             position=(0.97, 0.95),
             align=(:right, :top),
             space=:relative,
-            fontsize=18
+            fontsize=24
         )
     else 
         text!(ax1, "Star $star"; position=(0.02, 0.95), align=(:left, :top),
-        space=:relative, fontsize=18)
+        space=:relative, fontsize=24)
     end
 
     # ================= RESIDUAL DISTRIBUTION PLOT =================
@@ -458,7 +472,7 @@ for star in star_names
 
     ylims!(ax2, 0, nothing)
     xlims!(ax2, start_year, end_year)
-    axislegend(ax2; position=:lt, framevisible=true, backgroundcolor=:white)
+    axislegend(ax2; position=:lt, framevisible=true, backgroundcolor=:white, labelsize=24)
 
     display(fig)
 
@@ -466,44 +480,26 @@ for star in star_names
     plot_filename = joinpath(output_dir, "curvature_forecast_star$(star).png")
         save(plot_filename, fig)
         println("Saved plot for Star $star to: $plot_filename")
-    
-    # ================= FIGURE 2: FRACTIONS OF SIGNIFICANT RESIDUALS =================
-    
-    fig2 = Figure(size = (800, 400))
-
-    ax_frac = Axis(fig2[1, 1];
-        xlabel="Year",
-        title="Star $star"
-    )
-
-    # Fractions of residuals above 3-sigma astrometric detectability 
-    lines!(ax_frac, forecast_years, frac_3sigma;
-        color = w[6],
-        linewidth = 3,
-        label = "Fraction of Residuals > 3σ"
-    )
-
-    ylims!(ax_frac, 0, 1)
-    xlims!(ax_frac, start_year, end_year)
-    axislegend(ax_frac; position=:lt, framevisible=true, backgroundcolor=:white)
-
-    display(fig2)
-
-    # Save plot to output_dir
-    plot_filename_frac = joinpath(output_dir, "residual_fractions_star$(star).png")
-    save(plot_filename_frac, fig2)
-    println("Saved fractions plot for Star $star to: $plot_filename_frac")
-
 
 end
 
-# ================= FIGURE 2: FRACTION ABOVE 3-SIGMA FOR ALL STARS =================
+# ================= FIGURE 2: FRACTION ABOVE 3-SIGMA  =================
 
-fig2 = Figure(size = (800, 400))
+fig2 = Figure(size = (650, 550),
+            figure_padding = (10, 30, 10, 20))  # left, right, bottom, top
 
 ax_frac = Axis(fig2[1, 1];
     xlabel="Year",
-    #ylabel="Fraction of Residuals Exceeding 3σ",
+    ylabel="3σ Detection Probability",
+    xticks = [2025,2030, 2035],
+    xminorticks = 2023:1:2035,
+    xminorticksvisible=true,
+    xminorticksize=6,
+    yticks = [0.0, 0.25, 0.5, 0.75, 1.0],
+    ylabelsize = 26,
+    xlabelsize = 26,
+    xticklabelsize = 24,
+    yticklabelsize = 24
 )
 
 for star in star_names
@@ -516,7 +512,7 @@ end
 
 ylims!(ax_frac, 0, 1)
 xlims!(ax_frac, start_year, end_year)
-axislegend(ax_frac; position=:lt, framevisible=true, backgroundcolor=:white)
+axislegend(ax_frac; position=:lt, framevisible=true, backgroundcolor=:white, nbanks=3, fontsize =20)
 
 display(fig2)
 

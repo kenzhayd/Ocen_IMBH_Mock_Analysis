@@ -42,10 +42,11 @@ include(joinpath(@__DIR__, "parse_config.jl"))
 
 # ── 1. Parse arguments ───────────────────────────────────────────────────────
 
-length(ARGS) >= 1 || error("Usage: julia plot_chain.jl <chain.fits>")
-chain_path = ARGS[1]
-isfile(chain_path) || error("Chain file not found: $chain_path")
+# length(ARGS) >= 1 || error("Usage: julia plot_chain.jl <chain.fits>")
+# chain_path = ARGS[1]
+# isfile(chain_path) || error("Chain file not found: $chain_path")
 
+chain_path = raw"C:\Users\macke\Clusters\Ocen_IMBH_Mock_Analysis\mock_results\rand2_192c_16r_June20\starsACDEF_192c_16r_14912132_chain.fits"
 output_dir = dirname(abspath(chain_path))
 chain_basename = basename(chain_path)
 run_prefix = endswith(chain_basename, "_chain.fits") ?
@@ -72,7 +73,6 @@ epoch_year = cfg["epoch"]["year"]
 println("Reference epoch: $epoch_mjd MJD ($epoch_year yr)")
 
 # ── 3. Load chain ────────────────────────────────────────────────────────────
-
 chain = Octofitter.loadchain(chain_path)
 println("Loaded chain: $chain_path")
 println(chain)
@@ -144,10 +144,15 @@ for name in star_names
     Ω_prior = parse_prior(get_companion_prior(cfg, name, "Omega"))
     θ_prior = parse_prior(get_companion_prior(cfg, name, "theta"))
 
+obs = Any[ObsPriorAstromONeil2019(astrom_obs[name]), pm_obs[name]]
+if acc_obs[name] !== nothing
+    push!(obs, acc_obs[name])
+end
+
     star = Planet(
         name = name,
         basis = Visual{KepOrbit},
-        observations = [ObsPriorAstromONeil2019(astrom_obs[name]), pm_obs[name], acc_obs[name]],
+        observations = obs,
         variables = @variables begin
             M = system.M
             P ~ P_prior
@@ -1115,148 +1120,148 @@ save(joinpath(output_dir, "$(run_prefix)_imbh_position.png"), fig_ovl, px_per_un
 fig_ovl = nothing; GC.gc()
 println("IMBH position overlay figure saved.")
 
-# ── 13. 3D orbit animation (360° pan, IMBH-centric) ───────────────────────
+# # ── 13. 3D orbit animation (360° pan, IMBH-centric) ───────────────────────
 
-println("Generating 3D orbit animation...")
+# println("Generating 3D orbit animation...")
 
-using PlanetOrbits: posx, posy, posz
+# using PlanetOrbits: posx, posy, posz
 
-const AU_PER_PC = 206265.0
+# const AU_PER_PC = 206265.0
 
-# Pre-compute 3D orbit trajectories for each posterior sample (reuses
-# sample_idx from the orbit panels).  All positions are relative to the
-# IMBH and converted from AU to parsec.
-orbit_3d_samples = Dict{String, Vector{NamedTuple}}()
-star_pos_3d      = Dict{String, Vector{NamedTuple}}()
+# # Pre-compute 3D orbit trajectories for each posterior sample (reuses
+# # sample_idx from the orbit panels).  All positions are relative to the
+# # IMBH and converted from AU to parsec.
+# orbit_3d_samples = Dict{String, Vector{NamedTuple}}()
+# star_pos_3d      = Dict{String, Vector{NamedTuple}}()
 
-for name in star_names
-    s = star_samples[name]
-    orbits_list = NamedTuple[]
-    pos_list    = NamedTuple[]
-    for idx in sample_idx
-        orb = Visual{KepOrbit}(;
-            a = s.a[idx], e = s.e[idx], i = s.i[idx],
-            ω = s.ω[idx], Ω = s.Ω[idx], tp = s.tp[idx],
-            M = M_samples[idx], plx = plx_samples[idx])
-        P_yr = s.a[idx]^1.5 / sqrt(M_samples[idx])
-        ts   = range(epoch_mjd, epoch_mjd + P_yr * 365.25; length=300)
-        sols = [orbitsolve(orb, t) for t in ts]
-        push!(orbits_list, (
-            x = [posx(sl) for sl in sols] ./ AU_PER_PC,
-            y = [posy(sl) for sl in sols] ./ AU_PER_PC,
-            z = [posz(sl) for sl in sols] ./ AU_PER_PC,
-        ))
-        sol_now = orbitsolve(orb, epoch_mjd)
-        push!(pos_list, (
-            x = posx(sol_now) / AU_PER_PC,
-            y = posy(sol_now) / AU_PER_PC,
-            z = posz(sol_now) / AU_PER_PC,
-        ))
-    end
-    orbit_3d_samples[name] = orbits_list
-    star_pos_3d[name]      = pos_list
-end
+# for name in star_names
+#     s = star_samples[name]
+#     orbits_list = NamedTuple[]
+#     pos_list    = NamedTuple[]
+#     for idx in sample_idx
+#         orb = Visual{KepOrbit}(;
+#             a = s.a[idx], e = s.e[idx], i = s.i[idx],
+#             ω = s.ω[idx], Ω = s.Ω[idx], tp = s.tp[idx],
+#             M = M_samples[idx], plx = plx_samples[idx])
+#         P_yr = s.a[idx]^1.5 / sqrt(M_samples[idx])
+#         ts   = range(epoch_mjd, epoch_mjd + P_yr * 365.25; length=300)
+#         sols = [orbitsolve(orb, t) for t in ts]
+#         push!(orbits_list, (
+#             x = [posx(sl) for sl in sols] ./ AU_PER_PC,
+#             y = [posy(sl) for sl in sols] ./ AU_PER_PC,
+#             z = [posz(sl) for sl in sols] ./ AU_PER_PC,
+#         ))
+#         sol_now = orbitsolve(orb, epoch_mjd)
+#         push!(pos_list, (
+#             x = posx(sol_now) / AU_PER_PC,
+#             y = posy(sol_now) / AU_PER_PC,
+#             z = posz(sol_now) / AU_PER_PC,
+#         ))
+#     end
+#     orbit_3d_samples[name] = orbits_list
+#     star_pos_3d[name]      = pos_list
+# end
 
-# Axis limit matched to the combined 2D orbit panel (half_all in mas → pc)
-# raoff [mas] = posx [AU] × plx [mas], so half_all [mas] / (plx [mas] × AU_PER_PC) = half [pc]
-lim = half_all / (median(plx_samples) * AU_PER_PC) * 0.7
+# # Axis limit matched to the combined 2D orbit panel (half_all in mas → pc)
+# # raoff [mas] = posx [AU] × plx [mas], so half_all [mas] / (plx [mas] × AU_PER_PC) = half [pc]
+# lim = half_all / (median(plx_samples) * AU_PER_PC) * 0.7
 
-# Animation view-angle parameters (also used for the initial Axis3 view).
-azim_start = -3 * π / 4    # starting azimuth (three-quarter view)
-elev_max   = 50 * π / 180  # start/end elevation
-elev_min   = 10 * π / 180  # low angle, reveals LOS depth
+# # Animation view-angle parameters (also used for the initial Axis3 view).
+# azim_start = -3 * π / 4    # starting azimuth (three-quarter view)
+# elev_max   = 50 * π / 180  # start/end elevation
+# elev_min   = 10 * π / 180  # low angle, reveals LOS depth
 
-# Build figure with Axis3.
-# viewmode = :fit keeps ticks/labels inside the viewport as the camera rotates
-# (the default :fitzoom lets labels drift outside the frame).
-# dark=true: black background + white labels + white IMBH border (for animation and dark still).
-# dark=false: default theme (for the light-theme still frame).
-function _build_3d_fig(dark::Bool)
-    fig = Figure(size = (800, 800), fontsize = 16, figure_padding = 30)
-    ax  = Axis3(fig[1, 1];
-        xlabel = "x [pc]", ylabel = "y [pc]", zlabel = "z (LOS) [pc]",
-        limits = (-lim, lim, -lim, lim, -lim, lim),
-        aspect = :data,
-        viewmode = :fit,
-        azimuth   = azim_start,
-        elevation = elev_max,
-    )
+# # Build figure with Axis3.
+# # viewmode = :fit keeps ticks/labels inside the viewport as the camera rotates
+# # (the default :fitzoom lets labels drift outside the frame).
+# # dark=true: black background + white labels + white IMBH border (for animation and dark still).
+# # dark=false: default theme (for the light-theme still frame).
+# function _build_3d_fig(dark::Bool)
+#     fig = Figure(size = (800, 800), fontsize = 16, figure_padding = 30)
+#     ax  = Axis3(fig[1, 1];
+#         xlabel = "x [pc]", ylabel = "y [pc]", zlabel = "z (LOS) [pc]",
+#         limits = (-lim, lim, -lim, lim, -lim, lim),
+#         aspect = :data,
+#         viewmode = :fit,
+#         azimuth   = azim_start,
+#         elevation = elev_max,
+#     )
 
-    sample_masses_loc = M_samples[sample_idx]
-    mass_ref_loc      = median(sample_masses_loc)
-    base_size_loc     = lim * 0.012
+#     sample_masses_loc = M_samples[sample_idx]
+#     mass_ref_loc      = median(sample_masses_loc)
+#     base_size_loc     = lim * 0.012
 
-    for (k, name) in enumerate(star_names)
-        color = star_colors[name]
-        for o in orbit_3d_samples[name]
-            lines!(ax, o.x, o.y, o.z; color = (color, 0.3), linewidth = 0.5)
-        end
-        px = [p.x for p in star_pos_3d[name]]
-        py = [p.y for p in star_pos_3d[name]]
-        pz = [p.z for p in star_pos_3d[name]]
-        marker_sizes = base_size_loc .* (sample_masses_loc ./ mass_ref_loc)
-        meshscatter!(ax, px, py, pz; markersize = marker_sizes, color = color)
-        lines!(ax, [NaN], [NaN], [NaN]; color = color, linewidth = 2, label = "Star $name")
-    end
+#     for (k, name) in enumerate(star_names)
+#         color = star_colors[name]
+#         for o in orbit_3d_samples[name]
+#             lines!(ax, o.x, o.y, o.z; color = (color, 0.3), linewidth = 0.5)
+#         end
+#         px = [p.x for p in star_pos_3d[name]]
+#         py = [p.y for p in star_pos_3d[name]]
+#         pz = [p.z for p in star_pos_3d[name]]
+#         marker_sizes = base_size_loc .* (sample_masses_loc ./ mass_ref_loc)
+#         meshscatter!(ax, px, py, pz; markersize = marker_sizes, color = color)
+#         lines!(ax, [NaN], [NaN], [NaN]; color = color, linewidth = 2, label = "Star $name")
+#     end
 
-    # IMBH at origin.  On a dark background the black sphere needs a white border
-    # for readability: draw a slightly larger white sphere first, then the black one.
-    if dark
-        meshscatter!(ax, [0.0], [0.0], [0.0]; markersize = lim * 0.020, color = :white)
-    end
-    meshscatter!(ax, [0.0], [0.0], [0.0]; markersize = lim * 0.015, color = :black, label = "IMBH")
+#     # IMBH at origin.  On a dark background the black sphere needs a white border
+#     # for readability: draw a slightly larger white sphere first, then the black one.
+#     if dark
+#         meshscatter!(ax, [0.0], [0.0], [0.0]; markersize = lim * 0.020, color = :white)
+#     end
+#     meshscatter!(ax, [0.0], [0.0], [0.0]; markersize = lim * 0.015, color = :black, label = "IMBH")
 
-    axislegend(ax; position = :rt, framevisible = false)
-    return fig, ax
-end
+#     axislegend(ax; position = :rt, framevisible = false)
+#     return fig, ax
+# end
 
-n_frames   = 240
-framerate  = 15
-anim_path  = joinpath(output_dir, "$(run_prefix)_orbits_3d.mp4")
+# n_frames   = 240
+# framerate  = 15
+# anim_path  = joinpath(output_dir, "$(run_prefix)_orbits_3d.mp4")
 
-# Still-frame view: ≈7.5 s into the animation (frame 112 at 15 fps).
-_still_frame  = 112
-_t_still      = _still_frame / n_frames
-_azim_still   = azim_start + 2π * _t_still
-_elev_still   = (elev_max + elev_min) / 2 +
-                (elev_max - elev_min) / 2 * cos(2π * _t_still)
+# # Still-frame view: ≈7.5 s into the animation (frame 112 at 15 fps).
+# _still_frame  = 112
+# _t_still      = _still_frame / n_frames
+# _azim_still   = azim_start + 2π * _t_still
+# _elev_still   = (elev_max + elev_min) / 2 +
+#                 (elev_max - elev_min) / 2 * cos(2π * _t_still)
 
-# Dark-theme animation + dark-theme still frame.
-with_theme(theme_dark()) do
-    fig3d, ax3 = _build_3d_fig(true)
+# # Dark-theme animation + dark-theme still frame.
+# with_theme(theme_dark()) do
+#     fig3d, ax3 = _build_3d_fig(true)
 
-    record(fig3d, anim_path, 0:(n_frames - 1); framerate) do frame
-        t = frame / n_frames
-        ax3.azimuth[]   = azim_start + 2π * t
-        ax3.elevation[] = (elev_max + elev_min) / 2 +
-                          (elev_max - elev_min) / 2 * cos(2π * t)
-    end
-    println("3D orbit animation saved to: $anim_path")
+#     record(fig3d, anim_path, 0:(n_frames - 1); framerate) do frame
+#         t = frame / n_frames
+#         ax3.azimuth[]   = azim_start + 2π * t
+#         ax3.elevation[] = (elev_max + elev_min) / 2 +
+#                           (elev_max - elev_min) / 2 * cos(2π * t)
+#     end
+#     println("3D orbit animation saved to: $anim_path")
 
-    ax3.azimuth[]   = _azim_still
-    ax3.elevation[] = _elev_still
-    still_dark_path = joinpath(output_dir, "$(run_prefix)_orbits_3d_still_dark.png")
-    save(still_dark_path, fig3d, px_per_unit = 3)
-    println("3D still frame (dark) saved to: $still_dark_path")
-end
+#     ax3.azimuth[]   = _azim_still
+#     ax3.elevation[] = _elev_still
+#     still_dark_path = joinpath(output_dir, "$(run_prefix)_orbits_3d_still_dark.png")
+#     save(still_dark_path, fig3d, px_per_unit = 3)
+#     println("3D still frame (dark) saved to: $still_dark_path")
+# end
 
-# Light-theme animation + still frame (default Makie theme).
-let
-    anim_light_path = joinpath(output_dir, "$(run_prefix)_orbits_3d_light.mp4")
-    fig3d_lt, ax3_lt = _build_3d_fig(false)
-    record(fig3d_lt, anim_light_path, 0:(n_frames - 1); framerate) do frame
-        t = frame / n_frames
-        ax3_lt.azimuth[]   = azim_start + 2π * t
-        ax3_lt.elevation[] = (elev_max + elev_min) / 2 +
-                              (elev_max - elev_min) / 2 * cos(2π * t)
-    end
-    println("3D orbit animation (light) saved to: $anim_light_path")
-    ax3_lt.azimuth[]   = _azim_still
-    ax3_lt.elevation[] = _elev_still
-    still_light_path = joinpath(output_dir, "$(run_prefix)_orbits_3d_still.png")
-    save(still_light_path, fig3d_lt, px_per_unit = 3)
-    println("3D still frame (light) saved to: $still_light_path")
-end
+# # Light-theme animation + still frame (default Makie theme).
+# let
+#     anim_light_path = joinpath(output_dir, "$(run_prefix)_orbits_3d_light.mp4")
+#     fig3d_lt, ax3_lt = _build_3d_fig(false)
+#     record(fig3d_lt, anim_light_path, 0:(n_frames - 1); framerate) do frame
+#         t = frame / n_frames
+#         ax3_lt.azimuth[]   = azim_start + 2π * t
+#         ax3_lt.elevation[] = (elev_max + elev_min) / 2 +
+#                               (elev_max - elev_min) / 2 * cos(2π * t)
+#     end
+#     println("3D orbit animation (light) saved to: $anim_light_path")
+#     ax3_lt.azimuth[]   = _azim_still
+#     ax3_lt.elevation[] = _elev_still
+#     still_light_path = joinpath(output_dir, "$(run_prefix)_orbits_3d_still.png")
+#     save(still_light_path, fig3d_lt, px_per_unit = 3)
+#     println("3D still frame (light) saved to: $still_light_path")
+# end
 
 # ── 14. Observed vs. model residuals (position, PM, acceleration) ────────────
 

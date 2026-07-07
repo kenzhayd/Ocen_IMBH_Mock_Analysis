@@ -267,7 +267,8 @@ end
 
 tol_random = 6000.0
 n_random = 1
-targets = [30000, 40000]
+targets = [30000, 40000, 45000,50000
+]
 
 for m in targets
     idx_random = random_mass_indices(Mvals, m;

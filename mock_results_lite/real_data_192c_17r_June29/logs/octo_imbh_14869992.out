@@ -1,0 +1,21 @@
+┌ Warning: could not download https://pkg.julialang.org/registries
+│   exception = RequestError: Failed to connect to pkg.julialang.org port 443 after 30006 ms: Timeout was reached while requesting https://pkg.julialang.org/registries
+└ @ Pkg.Registry /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Registry/Registry.jl:77
+    Updating registry at `~/.julia/registries/General.toml`
+   Resolving package versions...
+  No Changes to `~/projects/def-vhenault/kenzhayd/octoIMBH_env/Project.toml`
+  No Changes to `~/projects/def-vhenault/kenzhayd/octoIMBH_env/Manifest.toml`
+Loaded config: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/10836842_rerun.toml
+ERROR: LoadError: MethodError: no method matching build_star_observations(::octo_utils.StarData, ::Float64; include_rv::Bool, z_prior_sigma::Float64, include_esc_vel::Bool, include_acc::Bool)
+This error has been manually thrown, explicitly, so the method may exist but be intentionally marked as unimplemented.
+
+Closest candidates are:
+  build_star_observations(::octo_utils.StarData, ::Float64; include_rv, z_prior_sigma, include_esc_vel, acceleration_type) got unsupported keyword argument "include_acc"
+   @ octo_utils ~/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/launch_scripts/octo_utils.jl:402
+
+Stacktrace:
+ [1] kwerr(::@NamedTuple{include_rv::Bool, z_prior_sigma::Float64, include_esc_vel::Bool, include_acc::Bool}, ::Function, ::octo_utils.StarData, ::Float64)
+   @ Base ./error.jl:165
+ [2] top-level scope
+   @ ~/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/launch_scripts/octo_orbit_direct_likelihoods.jl:160
+in expression starting at /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/launch_scripts/octo_orbit_direct_likelihoods.jl:117

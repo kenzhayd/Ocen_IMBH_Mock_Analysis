@@ -414,11 +414,9 @@ Returns:
 - ev: PlanetEscVelObs or nothing (Häberle-style escape velocity constraint)
 """
 function build_star_observations(star::StarData, epoch_mjd::Float64;
-    include_rv::Bool=true,
-    z_prior_sigma::Union{Nothing,Float64}=nothing,
-    include_esc_vel::Bool=false,
-    include_acc::Bool=false,
-)
+                                  include_rv::Bool=true,
+                                  z_prior_sigma::Union{Nothing,Float64}=nothing,
+                                  include_esc_vel::Bool=false)
     # 1. Single-epoch position relative to cluster center.
     # RA offset is multiplied by cos(δ_ref) to give Δα* (east in mas), consistent
     # with the α* convention used by raoff(sol), pmra(sol), and the input PM/accel data.
@@ -438,19 +436,11 @@ function build_star_observations(star::StarData, epoch_mjd::Float64;
     )
 
     # 3. Acceleration at same epoch
-    acc = nothing
-
-    if include_acc
-        acc = PlanetAccelObs(
-            (epoch=[epoch_mjd],
-            accra=[star.acc_ra],
-            accdec=[star.acc_dec],
-            σ_accra=[star.sigma_acc_ra],
-            σ_accdec=[star.sigma_acc_dec],
-            cor=[0.0]);
-            name="$(star.name)_acc"
-        )
-    end
+    acc = PlanetAccelObs(
+        (epoch=[epoch_mjd], accra=[star.acc_ra], accdec=[star.acc_dec],
+         σ_accra=[star.sigma_acc_ra], σ_accdec=[star.sigma_acc_dec], cor=[0.0]);
+        name="$(star.name)_acc"
+    )
 
     # 4. Radial velocity (peculiar, relative to cluster systemic RV)
     rv = nothing

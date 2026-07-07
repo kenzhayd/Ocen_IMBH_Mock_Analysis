@@ -118,7 +118,6 @@ log_dir    = "../mock_results/logs"               # Slurm stdout/stderr and tee 
 enabled = true
           
 # System parameters 
-# Target central mass: M ≈ 64000.000000
 M_IMBH  = 38001.551123180194    # Solar masses
 plx     = 0.194699667080    # parallax [mas]
 offsetx = -325.726747190436

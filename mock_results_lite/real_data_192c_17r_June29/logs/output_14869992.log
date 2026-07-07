@@ -1,0 +1,14 @@
+Loaded config: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/10836842_rerun.toml
+ERROR: LoadError: MethodError: no method matching build_star_observations(::octo_utils.StarData, ::Float64; include_rv::Bool, z_prior_sigma::Float64, include_esc_vel::Bool, include_acc::Bool)
+This error has been manually thrown, explicitly, so the method may exist but be intentionally marked as unimplemented.
+
+Closest candidates are:
+  build_star_observations(::octo_utils.StarData, ::Float64; include_rv, z_prior_sigma, include_esc_vel, acceleration_type) got unsupported keyword argument "include_acc"
+   @ octo_utils ~/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/launch_scripts/octo_utils.jl:402
+
+Stacktrace:
+ [1] kwerr(::@NamedTuple{include_rv::Bool, z_prior_sigma::Float64, include_esc_vel::Bool, include_acc::Bool}, ::Function, ::octo_utils.StarData, ::Float64)
+   @ Base ./error.jl:165
+ [2] top-level scope
+   @ ~/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/launch_scripts/octo_orbit_direct_likelihoods.jl:160
+in expression starting at /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/launch_scripts/octo_orbit_direct_likelihoods.jl:117

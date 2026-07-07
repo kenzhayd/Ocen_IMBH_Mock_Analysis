@@ -1,0 +1,90 @@
+┌ Warning: could not download https://pkg.julialang.org/registries
+│   exception = RequestError: Failed to connect to pkg.julialang.org port 443 after 30005 ms: Timeout was reached while requesting https://pkg.julialang.org/registries
+└ @ Pkg.Registry /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Registry/Registry.jl:77
+    Updating registry at `~/.julia/registries/General.toml`
+   Resolving package versions...
+ERROR: IOError: open("/home/kenzhayd/.julia/logs/manifest_usage.toml.pid", 194, 292): Unknown system error -122 (Unknown system error -122)
+Stacktrace:
+  [1] uv_error
+    @ ./libuv.jl:106 [inlined]
+  [2] open(path::String, flags::UInt16, mode::UInt16)
+    @ Base.Filesystem ./filesystem.jl:190
+  [3] tryopen_exclusive(path::String, mode::UInt16)
+    @ FileWatching.Pidfile /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/FileWatching/src/pidfile.jl:217
+  [4] open_exclusive(path::String; mode::UInt16, poll_interval::Int64, wait::Bool, stale_age::Int64, refresh::Float64)
+    @ FileWatching.Pidfile /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/FileWatching/src/pidfile.jl:244
+  [5] open_exclusive
+    @ /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/FileWatching/src/pidfile.jl:237 [inlined]
+  [6] mkpidlock(at::String, pid::Int32; stale_age::Int64, refresh::Float64, kwopts::@Kwargs{})
+    @ FileWatching.Pidfile /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/FileWatching/src/pidfile.jl:68
+  [7] mkpidlock
+    @ /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/FileWatching/src/pidfile.jl:63 [inlined]
+  [8] mkpidlock(f::Pkg.Types.var"#52#55"{String, String, Dates.DateTime, String}, at::String, pid::Int32; kwopts::@Kwargs{stale_age::Int64})
+    @ FileWatching.Pidfile /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/FileWatching/src/pidfile.jl:93
+  [9] mkpidlock
+    @ /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/FileWatching/src/pidfile.jl:92 [inlined]
+ [10] mkpidlock
+    @ /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/FileWatching/src/pidfile.jl:90 [inlined]
+ [11] write_env_usage(source_file::String, usage_filepath::String)
+    @ Pkg.Types /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Types.jl:534
+ [12] Pkg.Types.EnvCache(env::String)
+    @ Pkg.Types /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Types.jl:372
+ [13] collect_developed!(env::Pkg.Types.EnvCache, pkg::Pkg.Types.PackageSpec, developed::Vector{Pkg.Types.PackageSpec})
+    @ Pkg.Operations /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Operations.jl:293
+ [14] collect_developed(env::Pkg.Types.EnvCache, pkgs::Vector{Pkg.Types.PackageSpec})
+    @ Pkg.Operations /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Operations.jl:311
+ [15] resolve_versions!(env::Pkg.Types.EnvCache, registries::Vector{Pkg.Registry.RegistryInstance}, pkgs::Vector{Pkg.Types.PackageSpec}, julia_version::VersionNumber, installed_only::Bool)
+    @ Pkg.Operations /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Operations.jl:392
+ [16] targeted_resolve(env::Pkg.Types.EnvCache, registries::Vector{Pkg.Registry.RegistryInstance}, pkgs::Vector{Pkg.Types.PackageSpec}, preserve::Pkg.Types.PreserveLevel, julia_version::VersionNumber)
+    @ Pkg.Operations /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Operations.jl:1398
+ [17] tiered_resolve(env::Pkg.Types.EnvCache, registries::Vector{Pkg.Registry.RegistryInstance}, pkgs::Vector{Pkg.Types.PackageSpec}, julia_version::VersionNumber, try_all_installed::Bool)
+    @ Pkg.Operations /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Operations.jl:1370
+ [18] _resolve(io::IOContext{IO}, env::Pkg.Types.EnvCache, registries::Vector{Pkg.Registry.RegistryInstance}, pkgs::Vector{Pkg.Types.PackageSpec}, preserve::Pkg.Types.PreserveLevel, julia_version::VersionNumber)
+    @ Pkg.Operations /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Operations.jl:1408
+ [19] add(ctx::Pkg.Types.Context, pkgs::Vector{Pkg.Types.PackageSpec}, new_git::Set{Base.UUID}; allow_autoprecomp::Bool, preserve::Pkg.Types.PreserveLevel, platform::Base.BinaryPlatforms.Platform, target::Symbol)
+    @ Pkg.Operations /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Operations.jl:1442
+ [20] add
+    @ /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Operations.jl:1414 [inlined]
+ [21] add(ctx::Pkg.Types.Context, pkgs::Vector{Pkg.Types.PackageSpec}; preserve::Pkg.Types.PreserveLevel, platform::Base.BinaryPlatforms.Platform, target::Symbol, allow_autoprecomp::Bool, kwargs::@Kwargs{io::IOContext{IO}})
+    @ Pkg.API /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/API.jl:312
+ [22] add(pkgs::Vector{Pkg.Types.PackageSpec}; io::IOContext{IO}, kwargs::@Kwargs{})
+    @ Pkg.API /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/API.jl:159
+ [23] add(pkgs::Vector{Pkg.Types.PackageSpec})
+    @ Pkg.API /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/API.jl:148
+ [24] add(pkgs::Vector{String})
+    @ Pkg.API /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/API.jl:147
+ [25] top-level scope
+    @ none:1
+ERROR: LoadError: IOError: open("/home/kenzhayd/.julia/logs/manifest_usage.toml.pid", 194, 292): Unknown system error -122 (Unknown system error -122)
+Stacktrace:
+  [1] uv_error
+    @ ./libuv.jl:106 [inlined]
+  [2] open(path::String, flags::UInt16, mode::UInt16)
+    @ Base.Filesystem ./filesystem.jl:190
+  [3] tryopen_exclusive(path::String, mode::UInt16)
+    @ FileWatching.Pidfile /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/FileWatching/src/pidfile.jl:217
+  [4] open_exclusive(path::String; mode::UInt16, poll_interval::Int64, wait::Bool, stale_age::Int64, refresh::Float64)
+    @ FileWatching.Pidfile /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/FileWatching/src/pidfile.jl:244
+  [5] open_exclusive
+    @ /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/FileWatching/src/pidfile.jl:237 [inlined]
+  [6] mkpidlock(at::String, pid::Int32; stale_age::Int64, refresh::Float64, kwopts::@Kwargs{})
+    @ FileWatching.Pidfile /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/FileWatching/src/pidfile.jl:68
+  [7] mkpidlock
+    @ /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/FileWatching/src/pidfile.jl:63 [inlined]
+  [8] mkpidlock(f::Pkg.Types.var"#52#55"{String, String, Dates.DateTime, String}, at::String, pid::Int32; kwopts::@Kwargs{stale_age::Int64})
+    @ FileWatching.Pidfile /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/FileWatching/src/pidfile.jl:93
+  [9] mkpidlock
+    @ /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/FileWatching/src/pidfile.jl:92 [inlined]
+ [10] mkpidlock
+    @ /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/FileWatching/src/pidfile.jl:90 [inlined]
+ [11] write_env_usage(source_file::String, usage_filepath::String)
+    @ Pkg.Types /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Types.jl:534
+ [12] Pkg.Types.EnvCache(env::Nothing)
+    @ Pkg.Types /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Types.jl:372
+ [13] EnvCache
+    @ /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Types.jl:351 [inlined]
+ [14] dependencies()
+    @ Pkg.API /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/API.jl:83
+ [15] top-level scope
+    @ ~/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/launch_scripts/octo_orbit_direct_likelihoods.jl:34
+in expression starting at /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/launch_scripts/octo_orbit_direct_likelihoods.jl:33

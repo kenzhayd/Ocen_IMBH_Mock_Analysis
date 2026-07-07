@@ -1,0 +1,80 @@
+┌ Warning: could not download https://pkg.julialang.org/registries
+│   exception = RequestError: Failed to connect to pkg.julialang.org port 443 after 30006 ms: Timeout was reached while requesting https://pkg.julialang.org/registries
+└ @ Pkg.Registry /cvmfs/soft.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/julia/1.11.3/share/julia/stdlib/v1.11/Pkg/src/Registry/Registry.jl:77
+    Updating registry at `~/.julia/registries/General.toml`
+   Resolving package versions...
+  No Changes to `~/projects/def-vhenault/kenzhayd/octoIMBH_env/Project.toml`
+  No Changes to `~/projects/def-vhenault/kenzhayd/octoIMBH_env/Manifest.toml`
+Loaded config: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/10836842_rerun.toml
+[ Info: Preparing model
+┌ Info: Determined number of free variables
+└   D = 49
+┌ Info: Determined number type
+└   T = Float64
+ℓπcallback(θ): 0.000041 seconds
+∇ℓπcallback(θ): 0.002126 seconds (7 allocations: 181.062 KiB)
+Run summary written to /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/../results/run_outputs/starsACDEF_192c_17r_14890684_summary.md
+┌ Warning: This model has priors that cannot be sampled IID.
+└ @ OctofitterPigeonsExt ~/projects/def-vhenault/kenzhayd/Octofitter_imbh.jl/ext/OctofitterPigeonsExt/OctofitterPigeonsExt.jl:105
+[ Info: Sampler running with multiple threads     : true
+[ Info: Likelihood evaluated with multiple threads: false
+┌ Info: Starting values not provided for all parameters! Guessing starting point using global optimization:
+│   num_params = 49
+└   num_fixed = 0
+┌ Warning: The initial guess parameters fell outside the 0.00001 or 0.9999 quantile range of the priors, so global optimization search is disabled. Returning initial guess only, which may be far from the global mode.
+└ @ Octofitter ~/projects/def-vhenault/kenzhayd/Octofitter_imbh.jl/src/initialization.jl:553
+┌ Info: Found sample of initial positions
+│   logpost_range = (-131.59446278241208, -121.59087630629543)
+└   mean_logpost = -126.73628019935902
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  scans     restarts      Λ        Λ_var      time(s)    allc(B)  log(Z₁/Z₀)   min(α)     mean(α)    min(αₑ)   mean(αₑ) 
+────────── ────────── ────────── ────────── ────────── ────────── ────────── ────────── ────────── ────────── ──────────
+        2          0       7.27       7.17       1.18   6.44e+07   -2.6e+07          0      0.962          1          1 
+        4          0       13.1         11      0.709   2.77e+06  -7.13e+05          0      0.937          1          1 
+        8          0       16.9       16.9       1.39   5.63e+06  -1.11e+05          0      0.912          1          1 
+       16          0       19.2       20.5       2.82   1.13e+07  -2.93e+03          0      0.896          1          1 
+       32          0       22.7       24.3       5.36      2e+07       -312  3.09e-140      0.877          1          1 
+       64          0       25.3       12.9       12.7   3.24e+09       -247   5.45e-10        0.9          1          1 
+      128          0       27.7       13.3       24.7   6.54e+09       -289      0.021      0.893          1          1 
+      256          0       28.7       13.5       50.1   1.35e+10       -281      0.269       0.89          1          1 
+      512          0       29.3         14        101   2.69e+10       -280      0.671      0.887          1          1 
+ 1.02e+03          0       29.9       14.1        200   5.35e+10       -277      0.808      0.885          1          1 
+ 2.05e+03          1       30.1       14.7        403   1.06e+11       -274      0.811      0.883          1          1 
+  4.1e+03         20       30.7       15.3        795    2.1e+11       -269       0.81       0.88          1          1 
+ 8.19e+03         38         31         16   1.57e+03   4.15e+11       -258      0.817      0.877          1          1 
+ 1.64e+04         57       31.2       16.4    3.1e+03   8.15e+11       -248      0.748      0.876          1          1 
+ 3.28e+04         84       31.4       18.6      6e+03   1.56e+12       -224      0.814      0.869          1          1 
+ 6.55e+04        114       31.6       19.5   1.17e+04   2.96e+12       -211       0.82      0.867          1          1 
+ 1.31e+05        232       31.6       20.6   2.31e+04    5.8e+12       -202      0.808      0.864          1          1 
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+MCMC chain (131072×83×1 Array{Float64, 3})
+PT exec folder (intermediate checkpoints): /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/launch_scripts/results/all/2026-06-29-02-38-26-h9tJL4Iu
+PT location written to: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/../results/run_outputs/starsACDEF_192c_17r_14890684_pt_location.txt
+Loaded configuration from: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/results/run_outputs/starsACDEF_192c_17r_14890684_summary.md
+Reference epoch: 55197.0 MJD (2010.0 yr)
+Loaded chain: /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/configs/../results/run_outputs/starsACDEF_192c_17r_14890684_chain.fits
+MCMC chain (131072×83×1 Array{Float64, 3})
+Star names from summary: A, C, D, E, F
+ERROR: LoadError: MethodError: no method matching likelihoodname(::Nothing)
+The function `likelihoodname` exists, but no method is defined for this combination of argument types.
+
+Closest candidates are:
+  likelihoodname(!Matched::HillStabilityPrior)
+   @ Octofitter ~/projects/def-vhenault/kenzhayd/Octofitter_imbh.jl/src/likelihoods/prior-non-crossing.jl:45
+  likelihoodname(!Matched::LimitClosestApproachAUPrior)
+   @ Octofitter ~/projects/def-vhenault/kenzhayd/Octofitter_imbh.jl/src/likelihoods/prior-non-crossing.jl:7
+  likelihoodname(!Matched::ObsPriorAstromONeil2019)
+   @ Octofitter ~/projects/def-vhenault/kenzhayd/Octofitter_imbh.jl/src/likelihoods/prior-observable.jl:68
+  ...
+
+Stacktrace:
+ [1] Planet(; name::String, basis::Type, variables::Tuple{Octofitter.Priors, Octofitter.Derived, Octofitter.UnitLengthPrior{:ωx, :ωy}, Octofitter.UnitLengthPrior{:Ωx, :Ωy}, Octofitter.UnitLengthPrior{:θx, :θy}}, observations::Vector{Union{Nothing, Octofitter.AbstractObs}})
+   @ Octofitter ~/projects/def-vhenault/kenzhayd/Octofitter_imbh.jl/src/variables.jl:487
+ [2] top-level scope
+   @ ~/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/launch_scripts/plot_chain.jl:147
+ [3] include(fname::String)
+   @ Main ./sysimg.jl:38
+ [4] top-level scope
+   @ ~/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/launch_scripts/octo_orbit_direct_likelihoods.jl:401
+in expression starting at /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/launch_scripts/plot_chain.jl:139
+in expression starting at /home/kenzhayd/projects/def-vhenault/kenzhayd/Ocen_IMBH_Mock_Analysis/launch_scripts/octo_orbit_direct_likelihoods.jl:401
