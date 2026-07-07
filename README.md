@@ -324,7 +324,7 @@ Example:
 
 ```toml
 [paths]
-project    = "/home/kenzhayd/projects/def-vhenault/kenzhayd/octoIMBH_env"
+project    = "/home/.../octoIMBH_env"
 output_dir = "../mock_results/run_outputs"
 log_dir    = "../mock_results/logs"
 ```
