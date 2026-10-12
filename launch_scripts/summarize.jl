@@ -4,11 +4,8 @@ Summarize mock-data Octofitter results
 Computes the median and 68% credible intervals overal from the median system parameters and semi-major axes for each run,
 then compares the distribution of recovered posteriors with the inputted values.
 
-This is used to assess the consistency of Ocen_IMBH_analysis/Octofitter pipeline 
-and look for biases in parameter recovery. 
-
-*** Note, this script parses the posterior_stats.txt files from each run to get the recovered posteriors, 
-    it is not extracting results from the chain. 
+Note, this script parses the posterior_stats.txt files from each run to get the recovered posteriors, 
+it is not extracting results from the chain for speed reasons. 
 """
 
 using TOML
@@ -259,7 +256,7 @@ for sf in summary_files
 
     push!(run_ids, rid)
 
-    # ---------------- M_IMBH ----------------
+    # M_IMBH 
     push!(M_true, input_vals["M_IMBH"])
 
     if haskey(post, "M_IMBH")
@@ -270,7 +267,7 @@ for sf in summary_files
         push!(M_med, missing); push!(M_lo, missing); push!(M_hi, missing)
     end
 
-    # ---------------- plx ----------------
+    # plx 
     push!(plx_true, input_vals["plx"])
 
     if haskey(post, "plx")
@@ -281,7 +278,7 @@ for sf in summary_files
         push!(plx_med, missing); push!(plx_lo, missing); push!(plx_hi, missing)
     end
 
-    # ---------------- offsetx ----------------
+    # offsetx ---------
     push!(x_true, input_vals["offsetx"])
 
     if haskey(post, "offsetx")
@@ -292,7 +289,7 @@ for sf in summary_files
         push!(x_med, missing); push!(x_lo, missing); push!(x_hi, missing)
     end
 
-    # ---------------- offsety ----------------
+    # offsety 
     push!(y_true, input_vals["offsety"])
 
     if haskey(post, "offsety")
@@ -303,7 +300,7 @@ for sf in summary_files
         push!(y_med, missing); push!(y_lo, missing); push!(y_hi, missing)
     end
     
-    # ---------------- semi-major axis ----------------
+    # semi-major axis 
     push!(a_A_true, input_vals["A_a"])
     if haskey(post, "A_a")
         push!(a_A_med, post["A_a"].median)
@@ -464,7 +461,7 @@ for (p, prefix) in plot_params
 
     input = input0[p]
 
-    # ---------------- histogram ----------------
+    # histogram 
     fig = Figure(size = (700, 450), figure_padding = 30)
     
     input_color = w[4]

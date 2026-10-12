@@ -1,40 +1,28 @@
 # Mock Data Configuration (See end)
 
-# Run locally: julia --project=C:\Users\..\..\Octofitter_imbh.jl launch_scripts/octo_orbit_direct_likelihoods.jl configs/mock_default.toml
+# Run locally: julia --project=C:\Users\..\..\Octofitter_imbh.jl launch_scripts/octo_orbit_direct_likelihoods.jl configs/mock_22085399_1.toml
 
-# --- Run metadata (written into the run summary) ---
+# Run metadata (written into the run summary) 
 [meta]
 system_name = "Mock_Omega_Cen"
 description = "Mock dataset 5-star direct likelihood fit"
 
-# --- Star selection ---
+# Star selection 
 # Available: A, C, D, E, F,  
 [stars]
 selected = ["A", "C", "D", "E", "F"]
 
-# --- Reference epoch ---
+# Reference epoch 
 # Reference epoch at which position offsets, PM, and acceleration are evaluated.
 # Specified in decimal years; converted internally to MJD via Octofitter.years2mjd().
-# 55197.0 # 2010  from runID 10836842
+# 55927.0 MJD (2012.0 yr)  from runID 22085399
 [epoch]
-year = 2010.0
+year = 2012.0
 
-
-# === Priors =============================================================
-# Prior strings are parsed at runtime into Distributions.jl objects.
-# Supported forms:
-#   "Uniform(lo, hi)"
-#   "Normal(mu, sigma)"
-#   "truncated(Normal(mu, sigma), lower=L)"
-#   "truncated(Normal(mu, sigma), lower=L, upper=U)"
-#   "Sine()"
-#   "UniformCircular()"
-# Underscores in numbers (e.g. 2_000_000) are allowed inside strings.
-# ========================================================================
 
 # System-level priors (shared across all companions)
 [priors.system]
-plx     = "truncated(Normal(0.19, 0.004), lower=0)"   # Parallax [mas]
+plx     = "truncated(Normal(0.1842, 0.0017), lower=0)"  # Parallax [mas] 5.43 +/- 0.05 kpc
 M       = "Uniform(100, 100000)"                        # IMBH mass [solar masses]
 offsetx = "Uniform(-3000, 3000)"                        # IMBH RA offset from assumed center [mas]; ±3" covers Haberle+2024 MCMC centre (0.77" NE of AvdM10)
 offsety = "Uniform(-3000, 3000)"                        # IMBH Dec offset from assumed center [mas]
@@ -48,7 +36,7 @@ omega = "UniformCircular()"          # Argument of periastron [rad]
 Omega = "UniformCircular()"          # Longitude of ascending node [rad]
 theta = "UniformCircular()"          # Mean anomaly at reference epoch [rad]
 
-# --- Data selection ---
+# Data selection 
 # Which observation types to include per star.  Defaults apply to all stars.
 # Set to false to exclude a data type for a specific star.
 # "radial_velocity" is only used when the star has RV data in octo_utils.jl.
@@ -58,7 +46,8 @@ proper_motion   = true
 acceleration    = false
 radial_velocity = true
 escape_velocity = false     # Häberle-style piecewise escape velocity constraint
-position_oneil = true 
+position_oneil  = true 
+z_prior         = true
 
 [data.overrides.A]
 radial_velocity = false
@@ -79,32 +68,28 @@ sigma_z_au = 4558.0
 [restart]
 job_id = ""
 
-# Per-star overrides (uncomment to disable specific data for a star):
-# [data.overrides.A]
-# acceleration = false
-
-# --- Sampling ---
+# Sampling 
 [sampling]
-n_rounds             = 16
+n_rounds             = 17
 n_chains             = 192
 n_chains_variational = 192
 checkpoint           = true
 
 
-# --- Slurm / HPC ---
+# Slurm / HPC 
 [slurm]
 account       = "def-vhenault"
-job_name      = "mock_rand_2"
+job_name      = "mock_22085399_1"
 nodes         = 1
 cpus_per_task = 192
 mem_per_cpu   = "3G"
-time          = "18:00:00"
+time          = "23:00:00"
 julia_module  = "julia/1.11.3"
 julia_threads = 192
 mail_type     = "ALL"
 mail_user     = "Mackenzie.hayduk@smu.ca"
 
-# --- Paths ---
+# Paths 
 # Relative paths are resolved from the directory containing this config file.
 [paths]
 project    = "/home/kenzhayd/projects/def-vhenault/kenzhayd/octoIMBH_env"    # --project= argument for Julia
@@ -117,14 +102,17 @@ log_dir    = "../mock_results/logs"               # Slurm stdout/stderr and tee 
 [mock]
 enabled = true
           
-# System parameters 
-# Random mass sample 2 (M ≈ 63825.866, ΔM ≈ 174.134)
-# Sample index: 261944
-# Target central mass: M ≈ 64000.000000
-M_IMBH  = 63825.866208654894    # Solar masses
-plx     = 0.183920077278    # parallax [mas]
-offsetx = -21.609949303701
-offsety = 521.385138547764
+# Mock central IMBH parameters
+M_IMBH  = 74686.028616228883    # Solar masses
+plx     = 0.183706147041    # parallax [mas]
+offsetx = -341.231820435693
+offsety = 421.364441447597
+
+Random mass sample 5 (M ≈ 74686.029, ΔM ≈ 313.971)
+# Sample index: 96965
+# Target central mass: M ≈ 75000.000000
+# period, eccentricity, inclination [rad], ω [rad], Ω [rad], theta [rad]
+
 
 # Observation uncertainties (σ values) for mock data
 sigma_ra = 0.5       # Position RA uncertainty [mas]
@@ -141,27 +129,19 @@ sigma_acc_dec = 0.0118   # Acceleration Dec uncertainty [mas/yr²]
 sigma_rv = 3350.0         # Radial velocity uncertainty [m/s]
 
 
-# Posterior orbital parameters from Ocen_IMBH_analysis
-# Random mass sample 2 (M ≈ 63825.866, ΔM ≈ 174.134)
-# Sample index: 261944
-# Target central mass: M ≈ 64000.000000
-# starsACDEF_192c_18r_cont_10836842_chain.fits
-# period, eccentricity, inclination [rad], ω [rad], Ω [rad], theta [rad]
-
-
 [mock.stars]
 
 [mock.stars.A]
-orbital_elements = [2987.969134481202, 0.912828563952, 2.356946467175, 1.619563259841, 2.976689078610, -2.746934187049]
+orbital_elements = [1087.749533431384, 0.064616343110, 2.075945906560, -2.153665713187, -2.320043758049, 2.971205068915]
 
 [mock.stars.C]
-orbital_elements = [1907.938871996376, 0.024753477420, 1.128982960720, -0.737623060061, -2.902017543720, -1.144317501383]
+orbital_elements = [2010.706447424397, 0.011939567620, 1.403076730439, -0.909664065763, -2.904144577588, -0.413124776291]
 
 [mock.stars.D]
-orbital_elements = [2568.472807813616, 0.157303987710, 1.362527969700, -2.288578453946, -0.984819167447, 0.068763785713]
+orbital_elements = [2830.833517633371, 0.153091874751, 1.237609041233, -1.914636278064, -1.037418333645, 0.638626671781]
 
 [mock.stars.E]
-orbital_elements = [3239.429466848553, 0.835413028951, 1.350590140190, 2.764961046190, 2.322719451173, 2.360416515732]
+orbital_elements = [7141.415905871326, 0.438532701409, 1.592517757500, 2.403060512646, 2.218191911238, 2.199407452024]
 
 [mock.stars.F]
-orbital_elements = [5435.951418615776, 0.106318217302, 0.153960423962, -3.040956244961, -0.290077775172, 1.307246145887]
+orbital_elements = [6518.505278311685, 0.089157928498, 0.256733906009, -0.504648389812, -3.022403365916, 1.301998539155]

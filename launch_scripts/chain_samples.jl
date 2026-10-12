@@ -12,11 +12,11 @@ using Random
 
 # =====================  CONFIGURATION ===================== 
 
-chain_path = raw"C:\Users\macke\Clusters\run_108836842\starsACDEF_192c_18r_cont_10836842_chain.fits"
+chain_path = raw"C:\Users\macke\Clusters\Ocen_IMBH_Mock_Analysis\run_22085399\starsACDEF_192c_19r_cont_22085399_chain.fits"
 chain = Octofitter.loadchain(chain_path)
 println("Loaded chain: $chain_path")
 
-summary_path = raw"C:\Users\macke\Clusters\run_108836842\starsACDEF_192c_18r_cont_10836842_summary.md"
+summary_path = raw"C:\Users\macke\Clusters\Ocen_IMBH_Mock_Analysis\run_22085399\starsACDEF_192c_19r_cont_22085399_summary.md"
 summary_text = read(summary_path, String)
 
 println("\n=== ALL COLUMN NAMES IN CHAIN ===")
@@ -70,7 +70,6 @@ function print_mock_toml_block(chain, star_names, idx;
     println()
 
     println("$label")
-    println("# Fitting should recover these values")
     println("# Sample index: $idx")
 
     if target_M !== nothing
@@ -148,7 +147,7 @@ print_mock_toml_block(chain, star_names, idx_MAP;
 
 # ===================== CLOSEST-MASS ===================== 
 
-target_M = 64000.0
+target_M = 75000.0
 idx_M = argmin(abs.(Mvals .- target_M))
 
 println("\nClosest sample for M=$(target_M):")
@@ -265,10 +264,9 @@ end
 
 # ===================== SAMPLES OF DIFFERENT TARGET MASSES ===================== 
 
-tol_random = 6000.0
-n_random = 1
-targets = [30000, 40000, 45000,50000
-]
+tol_random = 1000.0
+n_random = 6
+targets = [75000]
 
 for m in targets
     idx_random = random_mass_indices(Mvals, m;

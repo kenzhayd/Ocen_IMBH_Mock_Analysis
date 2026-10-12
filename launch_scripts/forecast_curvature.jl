@@ -1,16 +1,10 @@
 """
-Forecast orbital curvature for future observations.
-
-Uses chain from the primary real-data fit to compute expected 
-growth of curvature residuals over time. 
-Suggests a timeline for when orbital curvature will 
-be significant enough to constrain accelerations.
+Forecast orbital curvature detectability for future observations of Omega Centauri stars.
 """
 
 ENV["OCTOFITTERPY_AUTOLOAD_EXTENSIONS"] = "yes"
 
 using Octofitter
-using Octofitter: @variables, System
 using Distributions
 using Unitful
 using UnitfulAstro
@@ -23,16 +17,12 @@ using DataFrames
 using Printf
 using Random
 using CairoMakie
-using PairPlots
-using LaTeXStrings
 
 
 push!(LOAD_PATH, @__DIR__)
 include("octo_utils.jl")
 
 # ===================== CONFIGURATION =====================
-
-# All outputs are saved to output_dir
 output_dir = raw"C:\Users\macke\Clusters\Ocen_IMBH_Mock_Analysis\mock_results\forcast_curvature\updated_5000_samples_2"
 mkpath(output_dir) 
 
@@ -40,18 +30,17 @@ mkpath(output_dir)
 # distribution of future curvature residuals
 N_samp = 5000
 
-# Number of posterior orbits drawn on the orbit panel. This matches the
-# plot_chain.jl sky-plane orbit panels.
+# Number of posterior orbits drawn on the orbit panel
 N_orbit_plot = 50
 
-# Assumed astrometric uncertainty of position measurements (mas)
+# Astrometric uncertainty of position measurements (mas)
 sigma_astrometry = 0.5
 
-# Reference epoch (Same as chain)
+# Reference epoch 
 epoch_year = 2010.0
 epoch_mjd  = Octofitter.years2mjd(epoch_year)
 
-# Same star colour convention as plot_chain.jl's orbit panels.
+# Same star colour convention as plot_chain.jl
 star_names = ["A", "C", "D", "E", "F"]
 w = Makie.wong_colors()
 star_colors = Dict{String, Any}(
@@ -81,10 +70,8 @@ idx_all = eachindex(logpost)
 
 # ===================== FUNCTIONS =====================
 
-
 """
-Extract a single posterior sample from the chain and construct the
-corresponding Keplerian orbit.
+Extract a single posterior sample from the chain and construct the orbit.
 
 Given a chain index and star name, gets the orbital parameters,
 computes the semimajor axis and time of periastron passage, and returns both
@@ -95,7 +82,7 @@ Returns
 orbit
     A Visual{KepOrbit} object.
 sample
-    Named tuple containing the sampled orbital and astrometric parameters.
+    Tuple containing the sampled orbital and astrometric parameters.
 """
 function extract_orbit_sample(chain, idx, star, epoch_mjd)
 
@@ -145,15 +132,12 @@ end
 """
 Build orbit trajectories from randomly selected posterior samples.
 
-Draws N samples from the posterior chain, propagates each orbit over one
-orbital period, and returns the corresponding RA and Dec offsets.
-
 Returns
 -------
 ra_samples
-    Vector of RA offsets in mas.
+    RA offsets in mas.
 dec_samples
-    Vector of Dec offsets in mas.
+    Dec offsets in mas.
 """
 function sample_orbit_trajectory(chain, idx_all, star, epoch_mjd, N)
 
@@ -183,10 +167,6 @@ end
 """
 Compute the distribution of curvature residuals relative to a linear model.
 
-For each forecast epoch, draws N_samp posterior orbit samples, 
-builds the corresponding orbits, 
-and compares them to a constant proper-motion trajectory.
-
 Returns
 -------
 pos_residual
@@ -205,7 +185,7 @@ function curvature_residuals_distribution(chain, idx_all, starname, years_since_
 
     star = octo_utils.stars[starname]
 
-    # Reference epoch positions (using observed absolute positions) relative from cluster center
+    # Reference epoch positions relative to cluster center
     ra0 = (star.ra - octo_utils.ra_cm_deg) * 3600 * 1000 * cosd(octo_utils.dec_cm_deg)
     dec0 = (star.dec - octo_utils.dec_cm_deg) * 3600 * 1000
 
@@ -221,11 +201,11 @@ function curvature_residuals_distribution(chain, idx_all, starname, years_since_
 
         sols = orbitsolve.(orbit, times)
 
-        # Switch to cluster-centered coordinate system from IMBH-centered
+        # Cluster-centered coordinate system from IMBH-centered
         ra_orbit  = raoff.(sols) .+ sample.offsetx
         dec_orbit = decoff.(sols) .+ sample.offsety
 
-        # Compute residuals (Octofitter Model - Linear Model (from observed data))
+        # Residuals 
         ra_residuals[:, k]  = ra_orbit .- ra_lin
         dec_residuals[:, k] = dec_orbit .- dec_lin
 
@@ -237,7 +217,7 @@ end
 
 # ===================== CURVATURE FORCAST ANALYSIS =====================
 
-# Open a file to store curbature forcast stats for all stars
+# Open a file to store stats
 stats_file_path = joinpath(output_dir, "curvature_forecast_stats.txt")
 open(stats_file_path, "w") do stats_io 
     write(stats_io, """
@@ -255,21 +235,20 @@ frac_3sigma_by_star = Dict{String, Vector{Float64}}()
 # Main loop 
 for star in star_names
 
-    # ================= OCTOFITTER MODEL POSITIONS =================
+    # Octofitter Model positions
     offsetx = median(chain[:offsetx])
     offsety = median(chain[:offsety])
 
     star_color = star_colors[star]
     ra_samples, dec_samples = sample_orbit_trajectory(chain, idx_all, star, epoch_mjd, N_orbit_plot)
     
-    # ================= OBSERVED POSITIONS =================
+    # Observed positions 
     real = octo_utils.stars[star]
 
     obs_ra  = (real.ra  - octo_utils.ra_cm_deg)  * 3600 * 1000 * cosd(octo_utils.dec_cm_deg)
     obs_dec = (real.dec - octo_utils.dec_cm_deg) * 3600 * 1000
 
-    # ================= RESIDUALS =================
-   
+    # Residuals
     pos_residuals, ra_residuals, dec_residuals = curvature_residuals_distribution(
     chain,
     idx_all,
@@ -282,22 +261,22 @@ for star in star_names
     # Median of residuals for each year forcasted
     med_residual = mapslices(median, pos_residuals; dims=2)[:]
 
-    # 1-Sigma spread (16th and 84th percentiles) for each year forcasted
+    # 1 sigma for each year forcasted
     residual_lo  = mapslices(x -> quantile(x, 0.16), pos_residuals; dims=2)[:]
     residual_hi  = mapslices(x -> quantile(x, 0.84), pos_residuals; dims=2)[:]
 
-    # 3-Sigma spread (0.15th and 99.85th percentiles) for each year forcasted
+    # 3 sigma for each year forcasted
     three_sigma_lo = mapslices(x -> quantile(x, 0.0015), pos_residuals; dims=2)[:]
     three_sigma_hi = mapslices(x -> quantile(x, 0.9985), pos_residuals; dims=2)[:]
 
-    # Fraction of residuals above 1-sigma of astrometric uncertainty for each year
+    # Fraction of residuals above 1 sigma of astrometric uncertainty for each year
     frac_1sigma = mapslices(x -> sum(x .> sigma_astrometry) / length(x), pos_residuals; dims=2)[:]
 
-    # Fraction of residuals above 3-sigma of astrometric uncertainty for each year
+    # Fraction of residuals above 3 sigma of astrometric uncertainty for each year
     frac_3sigma = mapslices(x -> sum(x .> 3 * sigma_astrometry) / length(x), pos_residuals; dims=2)[:]
     frac_3sigma_by_star[star] = frac_3sigma
     
-    # Linear Trajectory (2002 to end_year) 
+    # Linear Trajectory  
     baseline_years = 2002.0:0.1:end_year
     years_since_baseline_epoch = baseline_years .- epoch_year  
 
@@ -311,7 +290,7 @@ for star in star_names
         println(io_buffer, "\n--- Star $star ---")
         println(io_buffer, "Curvature residual growth (|Δr|, mas):")
         println(io_buffer, "  Year    Median  ±1σ (68% CI)        ±3σ (99.7% CI)        N(|Δr|>σ)  N(|Δr|>3σ)"),    
-        println(io_buffer, "          [mas]   [+/- mas]           [+/- mas]             /N_tot]    /N_tot")
+        println(io_buffer, "          [mas]   [+/- mas]           [+/- mas]             /N_tot     /N_tot")
 
         for (yr, m, lo1, hi1, lo3, hi3, f1, f3) in zip(
             forecast_years,
@@ -427,7 +406,6 @@ for star in star_names
     ra_min, ra_max = extrema(ra_full)
     dec_min, dec_max = extrema(dec_full)
 
-    # Apply calculated limits to zoom the plot
     xlims!(ax1, ra_min, ra_max)
     ylims!(ax1, dec_min, dec_max)
 
@@ -451,20 +429,20 @@ for star in star_names
     end
 
     # ================= RESIDUAL DISTRIBUTION PLOT =================
-    
-    # Plot residuals for total position (Octofitter trajectory - linear trajectory)
+
+    # Plot residuals for total position
     lines!(ax2, forecast_years, med_residual;
         color = star_color,
         linewidth = 3,
         label = "Median |Δr|"
     )
 
-    # 1-Sigma spread
+    # 1 sigma 
     band!(ax2, forecast_years, residual_lo, residual_hi;
     color = star_color, alpha=0.2, label="±1σ |Δr|")
 
     
-    # Astrometric 3-sigma uncertainty
+    # 3 sigma
     hlines!(ax2, 3*sigma_astrometry;
         color=:black, linestyle=:dot, label="3σ detection",
         linewidth=2
@@ -476,7 +454,6 @@ for star in star_names
 
     display(fig)
 
-    # Save plot to output_dir
     plot_filename = joinpath(output_dir, "curvature_forecast_star$(star).png")
         save(plot_filename, fig)
         println("Saved plot for Star $star to: $plot_filename")

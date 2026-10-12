@@ -4,3 +4,5 @@
 
 # Ignore massive simulation/data folders
 mock_results/
+
+run_22085399/
