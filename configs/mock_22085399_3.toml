@@ -108,7 +108,7 @@ plx     = 0.184109760815    # parallax [mas]
 offsetx = -412.633792403127
 offsety = 588.630237399028
 
-Random mass sample 2 (M ≈ 75003.139, ΔM ≈ 3.139)
+#Random mass sample 2 (M ≈ 75003.139, ΔM ≈ 3.139)
 # Fitting should recover these values
 # Sample index: 56242
 # Target central mass: M ≈ 75000.000000

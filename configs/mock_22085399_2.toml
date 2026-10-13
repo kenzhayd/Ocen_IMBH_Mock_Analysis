@@ -108,7 +108,7 @@ plx     = 0.181608915247    # parallax [mas]
 offsetx = 102.096890337107
 offsety = 664.295049001305
 
-Random mass sample 4 (M ≈ 74445.237, ΔM ≈ 554.763)
+#Random mass sample 4 (M ≈ 74445.237, ΔM ≈ 554.763)
 # Sample index: 298878
 # Target central mass: M ≈ 75000.000000
 # period, eccentricity, inclination [rad], ω [rad], Ω [rad], theta [rad]
