@@ -11,7 +11,7 @@ Orbit fitting uses [`Octofitter_imbh.jl`](https://github.com/vincent-hb/Octofitt
 
 ---
 
-## What Changed from [`Ocen_IMBH_analysis`](https://github.com/vincent-hb/Ocen_IMBH_analysis.git)
+## What was added from [`Ocen_IMBH_analysis`](https://github.com/vincent-hb/Ocen_IMBH_analysis.git)
 
 - Added mock data generation helpers in `launch_scripts/octo_utils.jl`:
   `make_star`, `mock_data`, `stardata_struct`, and `build_mock_observations`.
@@ -67,7 +67,7 @@ adds some plotting and sampling dependencies before launching the fit.
 The main fitting script also ensures `OctofitterRadialVelocity` is developed
 from `Octofitter_imbh.jl`.
 
-*** Note that not all dependencies are automatically loaded. Sorry! (At least KernalDensity is missing)
+
 
 ---
 
