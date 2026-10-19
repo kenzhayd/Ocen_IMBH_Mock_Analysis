@@ -16,7 +16,9 @@ push!(LOAD_PATH, @__DIR__)
 include(joinpath(@__DIR__,"parse_config.jl"))
 
 # ===================== CONFIGURATION =====================
-
+#using Pkg
+#Pkg.activate("./octoIMBH_env")
+#Pkg.instantiate()
 # Usage: julia batch_posterior_plots.jl <directory> OR set run_directory variable.
 
 # Direcotry with runs to plot 
